@@ -1,11 +1,11 @@
 /**
  *
- * @returns {JSX.Element}: The JSX code for home page
+ * @returns {TSX.Element}: The TSX code for home page
  */
-export default function Home() {
-  return (
-    <div>
-      <h1>Main</h1>
-    </div>
-  );
-}
+const Home = () => (
+  <div>
+    <h1>Main</h1>
+  </div>
+);
+
+export default Home;

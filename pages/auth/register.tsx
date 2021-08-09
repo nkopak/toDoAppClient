@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import Axios from 'axios';
+import React, { useState, FormEvent } from 'react';
 import {
   Container,
   TextField,
@@ -7,7 +6,12 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { ToastContainer, toast } from 'react-toastify';
+import signUp from '../../store/actions/registerActions';
+import useTypedSelector from '../../hooks/useTypedSelector';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
   field: {
@@ -16,42 +20,37 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Register() {
+const Register: React.FC = () => {
   const classes = useStyles();
 
-  const [firstNameReg, setFirstNameReg] = useState('');
-  const [lastNameReg, setLastNameReg] = useState('');
-  const [emailReg, setEmailReg] = useState('');
-  const [passwordReg, setPasswordReg] = useState('');
-  const [inputError, setInputError] = useState(false);
+  const dispatch = useDispatch();
 
-  const register = (e: any) => {
-    e.preventDefault();
+  const register = useTypedSelector((state) => state.register);
 
-    setInputError(false);
-
-    if (
-      firstNameReg === '' ||
-      lastNameReg === '' ||
-      emailReg === '' ||
-      passwordReg === ''
-    ) {
-      setInputError(true);
-    }
-
-    Axios.post('http://localhost:5000/auth/register', {
-      firstName: firstNameReg,
-      lastName: lastNameReg,
-      email: emailReg,
-      password: passwordReg
-    }).then((response) => {
-      console.log(response);
-    });
-  };
+  // const register = useTypedSelector((state) => state.register);
+  const [creds, setCreds] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+  });
 
   return (
     <Container>
-      <form>
+      <form
+        onSubmit={(e: FormEvent) => {
+          e.preventDefault();
+          dispatch(signUp(creds));
+          // console.log(register);
+
+          if (register.registerStatus) {
+            toast.success('You registered successfully!');
+          }
+          if (register.inputError) {
+            toast.error(register.inputError);
+          }
+        }}
+      >
         <Typography variant="h2">Registration</Typography>
         <TextField
           className={classes.field}
@@ -59,61 +58,71 @@ export default function Register() {
           label="First Name"
           variant="outlined"
           required
-          error={inputError}
+          // error={inputError}
           onChange={(e) => {
-            setFirstNameReg(e.target.value);
+            setCreds({ ...creds, firstName: e.target.value });
           }}
         />
         <br />
         <TextField
           className={classes.field}
-          id="firstNameInput"
+          id="lastNameInput"
           label="Last Name"
           variant="outlined"
           required
-          error={inputError}
+          // error={inputError}
           onChange={(e) => {
-            setLastNameReg(e.target.value);
+            setCreds({ ...creds, lastName: e.target.value });
           }}
         />
         <br />
         <TextField
           className={classes.field}
-          id="firstNameInput"
+          id="emailInput"
           label="Email"
           variant="outlined"
           required
-          error={inputError}
+          // error={inputError}
           onChange={(e) => {
-            setEmailReg(e.target.value);
+            setCreds({ ...creds, email: e.target.value });
           }}
         />
         <br />
         <TextField
           className={classes.field}
-          id="firstNameInput"
+          id="passwordInput"
           label="Password"
           variant="outlined"
           required
-          error={inputError}
+          // error={inputError}
           onChange={(e) => {
-            setPasswordReg(e.target.value);
+            setCreds({ ...creds, password: e.target.value });
           }}
         />
         <br />
-        {/* <button type="submit" onClick={register}>
-          Register
-        </button> */}
         <Button
           type="submit"
-          onClick={register}
           variant="contained"
           color="primary"
           endIcon={<ArrowRightIcon />}
+          disabled={register.loading}
         >
-          Register
+          {register.loading ? 'Loading...' : 'Register'}
         </Button>
       </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
     </Container>
   );
-}
+};
+
+export default Register;

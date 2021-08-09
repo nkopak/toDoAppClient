@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 // import useTypedSelector from '../hooks/useTypedSelector';
 import { signout } from '../store/actions/loginActions';
+import authService from '../services/authService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,21 +40,14 @@ const menuItems = [
 ];
 
 const Navbar = () => {
-  // const login = useTypedSelector((state) => state.login);
+  const status = authService.checkLoginStatus();
 
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [open, setOpen] = React.useState(false);
+  // const [status, setStatus] = useState(false);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   const handleClick = () => {
     dispatch(signout());
@@ -67,7 +61,9 @@ const Navbar = () => {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => {
+              setOpen(true);
+            }}
             edge="start"
           >
             <MenuIcon />
@@ -75,7 +71,7 @@ const Navbar = () => {
           <Typography variant="h6" className={classes.title}>
             To Do App
           </Typography>
-          {typeof window !== 'undefined' && localStorage.getItem('token') ? (
+          {status ? (
             <Button color="inherit" onClick={() => handleClick()}>
               Logout
             </Button>
@@ -88,7 +84,11 @@ const Navbar = () => {
       </AppBar>
       <Drawer variant="persistent" anchor="left" open={open}>
         <div>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
             <ChevronLeftIcon />
           </IconButton>
         </div>

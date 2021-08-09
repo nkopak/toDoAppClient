@@ -11,3 +11,4 @@ package.json
 pages\auth\login.tsx
 pages\auth\register.tsx
 tsconfig.json
+.babelrc

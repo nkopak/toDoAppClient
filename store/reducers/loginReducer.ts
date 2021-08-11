@@ -1,34 +1,3 @@
-// import { LoginState, LoginAction, LoginActionTypes } from '../../types/login';
-
-// const initialState: LoginState = {
-//   email: '',
-//   password: '',
-//   loginStatus: false,
-//   inputError: false
-// };
-
-// const loginReducer = (
-//   state = initialState,
-//   action: LoginAction
-// ): LoginState => {
-//   switch (action.type) {
-//     case LoginActionTypes.LOGIN_REQUEST: {
-//       return { ...state, loginStatus: false };
-//     }
-//     case LoginActionTypes.LOGIN_SUCCESS: {
-//       return { ...state, loginStatus: true };
-//     }
-//     case LoginActionTypes.LOGIN_FAILURE: {
-//       return { ...state, loginStatus: false, inputError: true };
-//     }
-//     default:
-//       return state;
-//   }
-// };
-
-// export default loginReducer;
-// import jwtDecode from 'jwt-decode';
-
 import {
   loginAction,
   loginState,
@@ -47,19 +16,8 @@ const initialState: loginState = {
   token: ''
 };
 
-// interface UserData {
-//   id: string;
-//   firstName: string;
-//   role: string;
-// }
-
 const loginReducer = (state = initialState, action: loginAction) => {
   switch (action.type) {
-    // case LOGIN_SET_USER:
-    //   return {
-    //     ...state,
-    //     loginStatus: true
-    //   };
     case LOGIN_SET_LOADING:
       return {
         ...state,

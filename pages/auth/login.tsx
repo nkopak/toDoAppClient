@@ -60,7 +60,7 @@ const Login = () => {
                  You successfully logged in :)`
               );
               setTimeout(() => {
-                router.push(`/user`);
+                router.push(`/lists`);
               }, 3000);
             }
           }

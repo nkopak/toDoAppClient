@@ -4,11 +4,14 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import loginReducer from './reducers/loginReducer';
 import registerReducer from './reducers/registerReducer';
+import listReducer from './reducers/listReducer';
 
 const combinedReducer = combineReducers({
   login: loginReducer,
-  register: registerReducer
+  register: registerReducer,
+  list: listReducer
 });
+
 const reducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
     const nextState = {

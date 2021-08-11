@@ -40,7 +40,7 @@ const menuItems = [
 ];
 
 const Navbar = () => {
-  const status = authService.checkLoginStatus();
+  const status = authService.getToken();
 
   const classes = useStyles();
   const dispatch = useDispatch();

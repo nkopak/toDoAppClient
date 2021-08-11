@@ -7,7 +7,7 @@ const logout = async (): Promise<void> => {
   await localStorage.removeItem('token');
 };
 
-const checkLoginStatus = () => {
+const getToken = () => {
   let status;
   if (typeof window !== 'undefined') {
     status = localStorage.getItem('token');
@@ -48,5 +48,5 @@ export default {
   login,
   logout,
   register,
-  checkLoginStatus
+  getToken
 };

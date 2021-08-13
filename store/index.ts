@@ -5,11 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import loginReducer from './reducers/loginReducer';
 import registerReducer from './reducers/registerReducer';
 import listReducer from './reducers/listReducer';
+import tokenInfoReducer from './reducers/tokenInfoReducer';
 
 const combinedReducer = combineReducers({
   login: loginReducer,
   register: registerReducer,
-  list: listReducer
+  list: listReducer,
+  tokenInfo: tokenInfoReducer
 });
 
 const reducer = (state: any, action: any) => {

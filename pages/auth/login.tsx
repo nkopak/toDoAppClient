@@ -14,6 +14,7 @@ import jwtDecode from 'jwt-decode';
 import signIn from '../../store/actions/loginActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import 'react-toastify/dist/ReactToastify.css';
+import { ITokenInfo } from '../../types/login';
 
 const useStyles = makeStyles({
   field: {
@@ -23,24 +24,21 @@ const useStyles = makeStyles({
   }
 });
 
-interface TokenInfo {
-  id: string;
-  firstName: string;
-}
-
 const Login = () => {
   const classes = useStyles();
   const router = useRouter();
 
   const dispatch = useDispatch();
 
-  const login = useTypedSelector((state) => state.login);
+  const { loginStatus, loading, token } = useTypedSelector(
+    (state) => state.login
+  );
   const [creds, setCreds] = useState({
     email: '',
     password: ''
   });
 
-  let tokenInfo: TokenInfo;
+  let tokenInfo: ITokenInfo;
 
   return (
     <Container>
@@ -48,13 +46,15 @@ const Login = () => {
         Login
       </Typography>
       <form
-        onSubmit={(e: FormEvent) => {
+        onSubmit={async (e: FormEvent) => {
           e.preventDefault();
-          dispatch(signIn(creds));
-
-          if (login.token) {
-            tokenInfo = jwtDecode(login.token);
-            if (login.loginStatus) {
+          // debugger;
+          await dispatch(signIn(creds)); // --------------->asynchronous
+          // -------------------->synchronous
+          // debugger;
+          if (token) {
+            tokenInfo = jwtDecode(token);
+            if (loginStatus) {
               toast.success(
                 `Hello ${tokenInfo.firstName}!
                  You successfully logged in :)`
@@ -64,7 +64,8 @@ const Login = () => {
               }, 3000);
             }
           }
-          if (!login.loginStatus) {
+          // debugger;
+          if (!loginStatus) {
             toast.error('Invalid login or password :(');
           }
         }}
@@ -95,9 +96,9 @@ const Login = () => {
           variant="contained"
           color="primary"
           endIcon={<ArrowRightIcon />}
-          disabled={login.loading}
+          disabled={loading}
         >
-          {login.loading ? 'Wait' : 'Login'}
+          {loading ? 'Wait' : 'Login'}
         </Button>
       </form>
       <ToastContainer

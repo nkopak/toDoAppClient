@@ -26,6 +26,10 @@ export interface SignInData {
   // token: string;
 }
 
+export interface ITokenInfo {
+  id: string;
+  firstName: string;
+}
 // Actions
 interface SetLoadingAction {
   type: typeof LOGIN_SET_LOADING;

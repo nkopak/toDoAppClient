@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import { ICreateListData } from '../types/list';
+import { ICreateListData, IDeleteListData } from '../types/list';
 import axiosInstance from './axiosInstance';
 
 const loadLists = async (userId: string, token: string): Promise<any> => {
@@ -44,4 +44,13 @@ const createList = async (data: ICreateListData): Promise<any> => {
 //   });
 // };
 
-export default { loadLists, createList };
+const deleteList = async (data: IDeleteListData): Promise<any> => {
+  const response = await axiosInstance(data.token).delete(
+    `${data.userId}/lists/${data.id}`
+  );
+  console.log(response);
+
+  return response.data[0];
+};
+
+export default { loadLists, createList, deleteList };

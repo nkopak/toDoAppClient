@@ -7,7 +7,7 @@ import useTypedSelector from '../../hooks/useTypedSelector';
 import getLists from '../../store/actions/listActions';
 import authService from '../../services/authService';
 import TodoList from '../../components/TodoList';
-import SimpleModal from '../../components/SimpleModal';
+import CreateListModal from '../../components/CreateListModal';
 import { ITokenInfo } from '../../types/login';
 import getTokenInfo from '../../store/actions/tokenInfoActions';
 
@@ -45,7 +45,7 @@ const Lists = () => {
       </Typography>
       <hr />
       {typeof token === 'string' && (
-        <SimpleModal
+        <CreateListModal
           buttonTitle="Create To Do List"
           modalTitle="Create list title"
           // token={token}

@@ -3,6 +3,7 @@ export const LIST_SET_LOADING = 'LIST_SET_LOADING';
 export const LIST_SET_ERROR = 'LIST_SET_ERROR';
 export const LIST_ADD_LIST = 'LIST_ADD_LIST';
 export const LIST_DELETE_LIST = 'LIST_DELETE_LIST';
+export const LIST_UPDATE_LIST = 'LIST_UPDATE_LIST';
 
 export interface IList {
   id: string;
@@ -22,6 +23,13 @@ export interface IDeleteListData {
   todoTitle: string;
   token: string;
 }
+
+export interface IUpdateListData {
+  userId: string;
+  id: string;
+  todoTitle: string;
+  token: string;
+}
 export interface listState {
   lists: Array<IList>;
   loading: boolean;
@@ -36,6 +44,11 @@ interface SetListsAction {
 interface AddListAction {
   type: typeof LIST_ADD_LIST;
   payload: IList;
+}
+
+interface UpdateListAction {
+  type: typeof LIST_UPDATE_LIST;
+  payload: IUpdateListData;
 }
 
 interface DeleteListAction {
@@ -58,4 +71,5 @@ export type listAction =
   | SetListLoadingAction
   | SetListErrorAction
   | AddListAction
+  | UpdateListAction
   | DeleteListAction;

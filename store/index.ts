@@ -26,8 +26,14 @@ const reducer = (state: any, action: any) => {
   return combinedReducer(state, action);
 };
 
-const initStore = () =>
-  createStore(reducer, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+const initStore = () => {
+  const tempStore = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(thunkMiddleware))
+  );
+  // tempStore.dispatch();
+  return tempStore;
+};
 
 const wrapper = createWrapper(initStore);
 export default wrapper;

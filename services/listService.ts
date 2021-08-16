@@ -1,5 +1,9 @@
 // import axios from 'axios';
-import { ICreateListData, IDeleteListData } from '../types/list';
+import {
+  ICreateListData,
+  IDeleteListData,
+  IUpdateListData
+} from '../types/list';
 import axiosInstance from './axiosInstance';
 
 const loadLists = async (userId: string, token: string): Promise<any> => {
@@ -8,7 +12,7 @@ const loadLists = async (userId: string, token: string): Promise<any> => {
   if (!response) {
     return null;
   }
-  // console.log(response);
+
   return response.data;
 };
 
@@ -31,26 +35,25 @@ const createList = async (data: ICreateListData): Promise<any> => {
     `/${data.userId}/lists`,
     data
   );
-  // console.log(response.data);
+
   return response.data[0];
 };
 
-// const createList = async (data: ICreateListData): Promise<void> => {
-//   await axios.post(`${baseUrl}/${data.userId}/lists`, data, {
-//     headers: {
-//       Authorization: `Bearer ${data.token}`
-//     }
-//     // body: { userId: data.userId, todoTitle: data.todoTitle }
-//   });
-// };
+const updateList = async (data: IUpdateListData): Promise<any> => {
+  const response = await axiosInstance(data.token).put(
+    `${data.userId}/lists/${data.id}`,
+    data
+  );
+
+  return response.data[0];
+};
 
 const deleteList = async (data: IDeleteListData): Promise<any> => {
   const response = await axiosInstance(data.token).delete(
     `${data.userId}/lists/${data.id}`
   );
-  console.log(response);
 
   return response.data[0];
 };
 
-export default { loadLists, createList, deleteList };
+export default { loadLists, createList, updateList, deleteList };

@@ -3,12 +3,14 @@ import listService from '../../services/listService';
 import {
   ICreateListData,
   IDeleteListData,
+  IUpdateListData,
   listAction,
   LIST_ADD_LIST,
   LIST_DELETE_LIST,
   LIST_SET_ERROR,
   LIST_SET_LISTS,
-  LIST_SET_LOADING
+  LIST_SET_LOADING,
+  LIST_UPDATE_LIST
 } from '../../types/list';
 import { RootState } from '../index';
 
@@ -49,6 +51,23 @@ export const createList =
     }
   };
 
+export const updateList =
+  (data: IUpdateListData): ThunkAction<void, RootState, null, listAction> =>
+  async (dispatch) => {
+    dispatch({ type: LIST_SET_LOADING, payload: true });
+    dispatch({ type: LIST_SET_ERROR, payload: '' });
+    try {
+      const response = await listService.updateList(data);
+      if (response) {
+        dispatch({ type: LIST_UPDATE_LIST, payload: response });
+      }
+    } catch (error) {
+      dispatch({ type: LIST_SET_ERROR, payload: error.message });
+    } finally {
+      dispatch({ type: LIST_SET_LOADING, payload: false });
+    }
+  };
+
 export const deleteList =
   (data: IDeleteListData): ThunkAction<void, RootState, null, listAction> =>
   async (dispatch) => {
@@ -56,7 +75,6 @@ export const deleteList =
     dispatch({ type: LIST_SET_ERROR, payload: '' });
     try {
       const response = await listService.deleteList(data);
-      console.log(response);
 
       if (response) {
         dispatch({ type: LIST_DELETE_LIST, payload: response });

@@ -16,9 +16,9 @@ import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-// import useTypedSelector from '../hooks/useTypedSelector';
 import { signout } from '../store/actions/loginActions';
 import authService from '../services/authService';
+import { deleteTokenInfo } from '../store/actions/tokenInfoActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,12 +45,12 @@ const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // const [status, setStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const handleClick = () => {
     dispatch(signout());
+    dispatch(deleteTokenInfo());
     router.push('/auth/login');
   };
 

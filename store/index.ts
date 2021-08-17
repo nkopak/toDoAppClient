@@ -6,6 +6,7 @@ import loginReducer from './reducers/loginReducer';
 import registerReducer from './reducers/registerReducer';
 import listReducer from './reducers/listReducer';
 import tokenInfoReducer from './reducers/tokenInfoReducer';
+import getTokenInfo from './actions/tokenInfoActions';
 
 const combinedReducer = combineReducers({
   login: loginReducer,
@@ -31,7 +32,8 @@ const initStore = () => {
     reducer,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );
-  // tempStore.dispatch();
+  tempStore.dispatch(getTokenInfo());
+
   return tempStore;
 };
 

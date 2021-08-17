@@ -15,6 +15,7 @@ import signIn from '../../store/actions/loginActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import 'react-toastify/dist/ReactToastify.css';
 import { ITokenInfo } from '../../types/login';
+import getTokenInfo from '../../store/actions/tokenInfoActions';
 
 const useStyles = makeStyles({
   field: {
@@ -55,6 +56,7 @@ const Login = () => {
           if (token) {
             tokenInfo = jwtDecode(token);
             if (loginStatus) {
+              dispatch(getTokenInfo());
               toast.success(
                 `Hello ${tokenInfo.firstName}!
                  You successfully logged in :)`

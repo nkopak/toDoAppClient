@@ -13,18 +13,11 @@ import { toast } from 'react-toastify';
 import { createList } from '../store/actions/listActions';
 import useTypedSelector from '../hooks/useTypedSelector';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
   return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
   };
 }
 
@@ -44,13 +37,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimpleModal({
   buttonTitle,
   modalTitle
-}: // token,
-// tokenInfo
-{
+}: {
   buttonTitle: string;
   modalTitle: string;
-  // token: string;
-  // tokenInfo: ITokenInfo;
 }) {
   const classes = useStyles();
   const { id, token } = useTypedSelector((state) => state.tokenInfo);
@@ -111,6 +100,4 @@ export default function SimpleModal({
 SimpleModal.propTypes = {
   buttonTitle: PropTypes.string.isRequired,
   modalTitle: PropTypes.string.isRequired
-  // token: PropTypes.string.isRequired,
-  // tokenInfo: PropTypes.shape({ id: PropTypes.string }).isRequired
 };

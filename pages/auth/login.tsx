@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import {
   Container,
   TextField,
@@ -10,12 +10,13 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 import signIn from '../../store/actions/loginActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import 'react-toastify/dist/ReactToastify.css';
-import { ITokenInfo } from '../../types/login';
+// import { ITokenInfo } from '../../types/login';
 import getTokenInfo from '../../store/actions/tokenInfoActions';
+// import { login } from '../../types';
 
 const useStyles = makeStyles({
   field: {
@@ -31,15 +32,38 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const { loginStatus, loading, token } = useTypedSelector(
+  const { loginStatus, loading, inputError } = useTypedSelector(
     (state) => state.login
   );
+
+  const { firstName } = useTypedSelector((state) => state.tokenInfo);
   const [creds, setCreds] = useState({
     email: '',
     password: ''
   });
 
-  let tokenInfo: ITokenInfo;
+  const [firstRender, setFirstRender] = useState(true);
+  const [flag, setFlag] = useState(false);
+
+  useEffect(() => {
+    if (!firstRender) {
+      if (loginStatus) {
+        toast.success(
+          `Hello ${firstName}!
+                 You successfully logged in :)`
+        );
+        setTimeout(() => {
+          router.push(`/lists`);
+        }, 3000);
+      }
+      if (inputError && !loginStatus) {
+        toast.error('Invalid login or password :(');
+      }
+    }
+    if (setFirstRender) {
+      setFirstRender(false);
+    }
+  }, [flag]);
 
   return (
     <Container>
@@ -49,27 +73,19 @@ const Login = () => {
       <form
         onSubmit={async (e: FormEvent) => {
           e.preventDefault();
-          // debugger;
-          await dispatch(signIn(creds)); // --------------->asynchronous
-          // -------------------->synchronous
-          // debugger;
-          if (token) {
-            tokenInfo = jwtDecode(token);
-            if (loginStatus) {
-              dispatch(getTokenInfo());
-              toast.success(
-                `Hello ${tokenInfo.firstName}!
-                 You successfully logged in :)`
-              );
-              setTimeout(() => {
-                router.push(`/lists`);
-              }, 3000);
+
+          await dispatch(signIn(creds));
+          await dispatch(getTokenInfo());
+
+          if (!firstRender) {
+            if (!flag) {
+              setFlag(true);
+            } else {
+              setFlag(false);
             }
           }
-          // debugger;
-          if (!loginStatus) {
-            toast.error('Invalid login or password :(');
-          }
+
+          // console.log(flag);
         }}
       >
         <TextField
@@ -99,9 +115,11 @@ const Login = () => {
           color="primary"
           endIcon={<ArrowRightIcon />}
           disabled={loading}
+          // onClick={async () => await checkLogin()}
         >
           {loading ? 'Wait' : 'Login'}
         </Button>
+        {/* <Button onClick={() => checkLogin()}>Check</Button> */}
       </form>
       <ToastContainer
         position="top-center"

@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Link from 'next/link';
 import { IList } from '../types/list';
 import { deleteList } from '../store/actions/listActions';
 import useTypedSelector from '../hooks/useTypedSelector';
 import UpdateListModal from './UpdateListModal';
+import getListItems from '../store/actions/listItemActions';
 
 const useStyles = makeStyles({
   container: {
@@ -40,7 +42,15 @@ const TodoList = ({ value }: { value: IList }) => {
 
   return (
     <Container className={styles.container}>
-      <Typography variant="h5">{value.todoTitle}</Typography>
+      <Typography
+        variant="h5"
+        onClick={() => {
+          dispatch(getListItems(creds.userId, creds.id, token));
+        }}
+      >
+        <Link href="/lists/listItems">{value.todoTitle}</Link>
+      </Typography>
+
       <UpdateListModal
         buttonTitle="Edit"
         modalTitle="Update list title"

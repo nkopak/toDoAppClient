@@ -27,10 +27,17 @@ export interface ICreateListItemData {
   token: string;
 }
 
+export interface IUpdateListItemData {
+  userId: string;
+  todoId: string;
+  id: string;
+  todoTitle: string;
+  token: string;
+}
 export interface IDeleteListItemData {
   userId: string;
   todoId: string;
-  itemId: string;
+  id: string;
   token: string;
 }
 
@@ -44,14 +51,14 @@ interface AddListItemAction {
   payload: IListItem;
 }
 
-// interface UpdateListItemAction {
-//   type: typeof LIST_ITEM_UPDATE_LIST_ITEM;
-//   payload: IListItem;
-// }
+interface UpdateListItemAction {
+  type: typeof LIST_ITEM_UPDATE_LIST_ITEM;
+  payload: IUpdateListItemData;
+}
 
 interface DeleteListItemAction {
   type: typeof LIST_ITEM_DELETE_LIST_ITEM;
-  payload: IListItem;
+  payload: IDeleteListItemData;
 }
 
 interface SetListItemLoadingAction {
@@ -67,7 +74,7 @@ interface SetListItemErrorAction {
 export type listItemAction =
   | SetListItemsAction
   | AddListItemAction
-  // | UpdateListItemAction
+  | UpdateListItemAction
   | DeleteListItemAction
   | SetListItemLoadingAction
   | SetListItemErrorAction;

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { IListItem } from '../types/listItem';
 import { deleteListItem } from '../store/actions/listItemActions';
 import useTypedSelector from '../hooks/useTypedSelector';
+import UpdateListItemModal from './UpdateListItemModal';
 
 const useStyles = makeStyles({
   container: {
@@ -34,13 +35,19 @@ const TodoListItem = ({ value }: { value: IListItem }) => {
   const [creds] = useState({
     userId: value.user_id,
     todoId: value.todo_id,
-    itemId: value.id,
+    id: value.id,
     token
   });
-
+  // console.log(creds);
   return (
     <Container className={styles.container}>
       <Typography variant="h5">{value.todoTitle}</Typography>
+      <UpdateListItemModal
+        buttonTitle="Edit"
+        modalTitle="Edit todo item"
+        listItemData={value}
+      />
+
       <Button
         variant="contained"
         className={styles.deleteBtn}

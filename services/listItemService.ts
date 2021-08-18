@@ -1,4 +1,8 @@
-import { ICreateListItemData, IDeleteListItemData } from '../types/listItem';
+import {
+  ICreateListItemData,
+  IDeleteListItemData,
+  IUpdateListItemData
+} from '../types/listItem';
 import axiosInstance from './axiosInstance';
 
 const loadListItems = async (
@@ -30,10 +34,12 @@ const createListItem = async (data: ICreateListItemData): Promise<any> => {
   return response.data[0];
 };
 
-const deleteListItem = async (data: IDeleteListItemData): Promise<any> => {
-  const response = await axiosInstance(data.token).delete(
-    `/users/${data.userId}/lists/${data.todoId}/todoItems/${data.itemId}`
+const updateListItem = async (data: IUpdateListItemData): Promise<any> => {
+  const response = await axiosInstance(data.token).put(
+    `/users/${data.userId}/lists/${data.todoId}/todoItems/${data.id}`,
+    data
   );
+
   if (!response) {
     return null;
   }
@@ -42,4 +48,20 @@ const deleteListItem = async (data: IDeleteListItemData): Promise<any> => {
   return response.data[0];
 };
 
-export default { loadListItems, createListItem, deleteListItem };
+const deleteListItem = async (data: IDeleteListItemData): Promise<any> => {
+  const response = await axiosInstance(data.token).delete(
+    `/users/${data.userId}/lists/${data.todoId}/todoItems/${data.id}`
+  );
+  if (!response) {
+    return null;
+  }
+
+  return response.data[0];
+};
+
+export default {
+  loadListItems,
+  createListItem,
+  updateListItem,
+  deleteListItem
+};

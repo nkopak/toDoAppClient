@@ -50,7 +50,7 @@ export default function SimpleModal({
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     userId: id,
-    todoId: listItems[0].todo_id,
+    todoId: listItems[0].todo_id, // ----->kostyl here. When there is no listItems app crashes. Need a better way for getting todoId
     token,
     todoTitle: '',
     isCompleted: false

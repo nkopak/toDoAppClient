@@ -1,3 +1,4 @@
+import { ICreateListItemData } from '../types/listItem';
 import axiosInstance from './axiosInstance';
 
 const loadListItems = async (
@@ -13,8 +14,20 @@ const loadListItems = async (
     return null;
   }
 
-  // console.log(response);
   return response.data;
 };
 
-export default { loadListItems };
+const createListItem = async (data: ICreateListItemData): Promise<any> => {
+  const response = await axiosInstance(data.token).post(
+    `/users/${data.userId}/lists/${data.todoId}/todoItems`,
+    data
+  );
+
+  if (!response) {
+    return null;
+  }
+  console.log(response);
+  return response.data[0];
+};
+
+export default { loadListItems, createListItem };

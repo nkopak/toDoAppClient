@@ -20,15 +20,22 @@ export interface listItemState {
   error: string;
 }
 
+export interface ICreateListItemData {
+  userId: string;
+  todoId: string;
+  todoTitle: string;
+  token: string;
+}
+
 interface SetListItemsAction {
   type: typeof LIST_ITEM_SET_LIST_ITEMS;
   payload: Array<IListItem>;
 }
 
-// interface AddListItemAction {
-//   type: typeof LIST_ITEM_ADD_LIST_ITEM;
-//   payload: IListItem;
-// }
+interface AddListItemAction {
+  type: typeof LIST_ITEM_ADD_LIST_ITEM;
+  payload: IListItem;
+}
 
 // interface UpdateListItemAction {
 //   type: typeof LIST_ITEM_UPDATE_LIST_ITEM;
@@ -52,7 +59,7 @@ interface SetListItemErrorAction {
 
 export type listItemAction =
   | SetListItemsAction
-  // | AddListItemAction
+  | AddListItemAction
   // | UpdateListItemAction
   // | DeleteListItemAction
   | SetListItemLoadingAction

@@ -10,8 +10,8 @@ import {
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { createList } from '../store/actions/listActions';
 import useTypedSelector from '../hooks/useTypedSelector';
+import { createListItem } from '../store/actions/listItemActions';
 
 function getModalStyle() {
   return {
@@ -43,14 +43,17 @@ export default function SimpleModal({
 }) {
   const classes = useStyles();
   const { id, token } = useTypedSelector((state) => state.tokenInfo);
+  const { listItems } = useTypedSelector((state) => state.listItem);
 
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     userId: id,
+    todoId: listItems[0].todo_id,
     token,
-    todoTitle: ''
+    todoTitle: '',
+    isCompleted: false
   });
 
   const dispatch = useDispatch();
@@ -65,14 +68,14 @@ export default function SimpleModal({
         onSubmit={(e: FormEvent) => {
           e.preventDefault();
 
-          dispatch(createList(creds));
+          dispatch(createListItem(creds));
           setOpen(false);
           toast.success(`Todo list ${creds.todoTitle} created.`);
         }}
       >
         <TextField
           id="standard-basic"
-          label="List Title"
+          label="Todo Title"
           onChange={(e) => setCreds({ ...creds, todoTitle: e.target.value })}
         />
         <Button type="submit">Create</Button>

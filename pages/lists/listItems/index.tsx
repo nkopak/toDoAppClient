@@ -4,9 +4,11 @@ import { ToastContainer } from 'react-toastify';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import TodoItem from '../../../components/TodoItem';
 import { IListItem } from '../../../types/listItem';
+import CreateListItemModal from '../../../components/CreateListItemModal';
 
 const ListItems = () => {
   const { listItems } = useTypedSelector((state) => state.listItem);
+  const { token } = useTypedSelector((state) => state.tokenInfo);
 
   useEffect(() => {
     // dispatch(getLists(id, token));
@@ -19,6 +21,12 @@ const ListItems = () => {
         List Title
       </Typography>
       <hr />
+      {token && (
+        <CreateListItemModal
+          buttonTitle="Add todo item"
+          modalTitle="Create new todo item"
+        />
+      )}
 
       {listItems &&
         listItems.map((item: IListItem) => (

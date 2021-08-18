@@ -5,7 +5,8 @@ import {
   LIST_ITEM_SET_LIST_ITEMS,
   LIST_ITEM_SET_LOADING,
   LIST_ITEM_ADD_LIST_ITEM,
-  LIST_ITEM_DELETE_LIST_ITEM
+  LIST_ITEM_DELETE_LIST_ITEM,
+  LIST_ITEM_UPDATE_LIST_ITEM
 } from '../../types/listItem';
 
 const initialState: listItemState = {
@@ -23,6 +24,25 @@ const listItemReducer = (state = initialState, action: listItemAction) => {
       listItems.push(action.payload);
 
       return { ...state, listItems };
+    }
+    case LIST_ITEM_UPDATE_LIST_ITEM: {
+      const { listItems } = state;
+
+      const itemForUpdate = listItems.find(
+        (item) => item.id === action.payload.id
+      );
+
+      const updatedItems = listItems.filter(
+        (item) => item.id !== action.payload.id
+      );
+
+      if (itemForUpdate) {
+        itemForUpdate.todoTitle = action.payload.todoTitle;
+
+        updatedItems.push(itemForUpdate);
+      }
+
+      return { ...state, listItems: updatedItems };
     }
     case LIST_ITEM_DELETE_LIST_ITEM: {
       const { listItems } = state;

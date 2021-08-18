@@ -11,6 +11,11 @@ export interface IList {
   user_id: string;
   todoTitle: string;
 }
+export interface listState {
+  lists: Array<IList>;
+  loading: boolean;
+  error: string;
+}
 export interface ICreateListData {
   userId: string;
   todoTitle: string;
@@ -29,11 +34,6 @@ export interface IUpdateListData {
   id: string;
   todoTitle: string;
   token: string;
-}
-export interface listState {
-  lists: Array<IList>;
-  loading: boolean;
-  error: string;
 }
 
 interface SetListsAction {

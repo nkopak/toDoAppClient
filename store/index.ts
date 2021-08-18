@@ -7,12 +7,14 @@ import registerReducer from './reducers/registerReducer';
 import listReducer from './reducers/listReducer';
 import tokenInfoReducer from './reducers/tokenInfoReducer';
 import getTokenInfo from './actions/tokenInfoActions';
+import listItemReducer from './reducers/listItemReducer';
 
 const combinedReducer = combineReducers({
   login: loginReducer,
   register: registerReducer,
   list: listReducer,
-  tokenInfo: tokenInfoReducer
+  tokenInfo: tokenInfoReducer,
+  listItem: listItemReducer
 });
 
 const reducer = (state: any, action: any) => {

@@ -48,7 +48,7 @@ const TodoList = ({ value }: { value: IList }) => {
           dispatch(getListItems(creds.userId, creds.id, token));
         }}
       >
-        <Link href="/lists/listItems">{value.todoTitle}</Link>
+        <Link href={`/lists/${value.id}/listItems`}>{value.todoTitle}</Link>
       </Typography>
 
       <UpdateListModal

@@ -11,8 +11,23 @@ import {
   LIST_ITEM_SET_ERROR,
   LIST_ITEM_SET_LIST_ITEMS,
   LIST_ITEM_SET_LOADING,
+  LIST_ITEM_SET_TODO_ID,
   LIST_ITEM_UPDATE_LIST_ITEM
 } from '../../types/listItem';
+
+export const setTodoId =
+  (todoId: string): ThunkAction<void, RootState, null, listItemAction> =>
+  async (dispatch) => {
+    dispatch({ type: LIST_ITEM_SET_ERROR, payload: '' });
+    dispatch({ type: LIST_ITEM_SET_LOADING, payload: true });
+    try {
+      dispatch({ type: LIST_ITEM_SET_TODO_ID, payload: todoId });
+    } catch (error) {
+      dispatch({ type: LIST_ITEM_SET_ERROR, payload: error.message });
+    } finally {
+      dispatch({ type: LIST_ITEM_SET_LOADING, payload: false });
+    }
+  };
 
 const getListItems =
   (

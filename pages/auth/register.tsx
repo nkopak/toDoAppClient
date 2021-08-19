@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   TextField,
@@ -6,6 +6,7 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core';
+import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,8 +23,8 @@ const useStyles = makeStyles({
 
 const Register: React.FC = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
+  const { handleSubmit, control } = useForm();
 
   const register = useTypedSelector((state) => state.register);
 
@@ -38,8 +39,8 @@ const Register: React.FC = () => {
   return (
     <Container>
       <form
-        onSubmit={(e: FormEvent) => {
-          e.preventDefault();
+        onSubmit={handleSubmit(async () => {
+          // e.preventDefault();
           dispatch(signUp(creds));
           // console.log(register);
 
@@ -49,56 +50,85 @@ const Register: React.FC = () => {
           if (register.inputError) {
             toast.error(register.inputError);
           }
-        }}
+        })}
       >
         <Typography variant="h2">Registration</Typography>
-        <TextField
-          className={classes.field}
-          id="firstNameInput"
-          label="First Name"
-          variant="outlined"
-          required
-          // error={inputError}
-          onChange={(e) => {
-            setCreds({ ...creds, firstName: e.target.value });
-          }}
+        <Controller
+          name="firstName"
+          control={control}
+          render={() => (
+            <TextField
+              className={classes.field}
+              id="firstNameInput"
+              label="First Name"
+              variant="outlined"
+              required
+              // error={inputError}
+              onChange={(e) => {
+                setCreds({ ...creds, firstName: e.target.value });
+              }}
+            />
+          )}
         />
+
         <br />
-        <TextField
-          className={classes.field}
-          id="lastNameInput"
-          label="Last Name"
-          variant="outlined"
-          required
-          // error={inputError}
-          onChange={(e) => {
-            setCreds({ ...creds, lastName: e.target.value });
-          }}
+        <Controller
+          name="lastName"
+          control={control}
+          render={() => (
+            <TextField
+              className={classes.field}
+              id="lastNameInput"
+              label="Last Name"
+              variant="outlined"
+              required
+              // error={inputError}
+              onChange={(e) => {
+                setCreds({ ...creds, lastName: e.target.value });
+              }}
+            />
+          )}
         />
+
         <br />
-        <TextField
-          className={classes.field}
-          id="emailInput"
-          label="Email"
-          variant="outlined"
-          required
-          // error={inputError}
-          onChange={(e) => {
-            setCreds({ ...creds, email: e.target.value });
-          }}
+
+        <Controller
+          name="email"
+          control={control}
+          render={() => (
+            <TextField
+              className={classes.field}
+              id="emailInput"
+              label="Email"
+              variant="outlined"
+              required
+              // error={inputError}
+              onChange={(e) => {
+                setCreds({ ...creds, email: e.target.value });
+              }}
+            />
+          )}
         />
+
         <br />
-        <TextField
-          className={classes.field}
-          id="passwordInput"
-          label="Password"
-          variant="outlined"
-          required
-          // error={inputError}
-          onChange={(e) => {
-            setCreds({ ...creds, password: e.target.value });
-          }}
+        <Controller
+          name="password"
+          control={control}
+          render={() => (
+            <TextField
+              className={classes.field}
+              id="passwordInput"
+              label="Password"
+              variant="outlined"
+              required
+              // error={inputError}
+              onChange={(e) => {
+                setCreds({ ...creds, password: e.target.value });
+              }}
+            />
+          )}
         />
+
         <br />
         <Button
           type="submit"

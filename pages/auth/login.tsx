@@ -1,4 +1,7 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useForm, Controller } from 'react-hook-form';
 import {
   Container,
   TextField,
@@ -7,19 +10,14 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
-// import jwtDecode from 'jwt-decode';
 import signIn from '../../store/actions/loginActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import 'react-toastify/dist/ReactToastify.css';
-// import { ITokenInfo } from '../../types/login';
 import getTokenInfo from '../../store/actions/tokenInfoActions';
-// import { login } from '../../types';
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
-  field: {
+  textField: {
     marginTop: 10,
     marginBottom: 10,
     display: 'block'
@@ -29,6 +27,7 @@ const useStyles = makeStyles({
 const Login = () => {
   const classes = useStyles();
   const router = useRouter();
+  const { handleSubmit, control } = useForm();
 
   const dispatch = useDispatch();
 
@@ -71,9 +70,7 @@ const Login = () => {
         Login
       </Typography>
       <form
-        onSubmit={async (e: FormEvent) => {
-          e.preventDefault();
-
+        onSubmit={handleSubmit(async () => {
           await dispatch(signIn(creds));
           await dispatch(getTokenInfo());
 
@@ -84,29 +81,39 @@ const Login = () => {
               setFlag(false);
             }
           }
-
-          // console.log(flag);
-        }}
+        })}
       >
-        <TextField
-          className={classes.field}
-          id="email"
-          label="Email"
-          variant="outlined"
-          // required
-          // error={!creds.email}
-          onChange={(e) => setCreds({ ...creds, email: e.target.value })}
+        <Controller
+          name="email"
+          control={control}
+          render={() => (
+            <TextField
+              className={classes.textField}
+              id="email"
+              label="Email"
+              variant="outlined"
+              onChange={(e) => setCreds({ ...creds, email: e.target.value })}
+            />
+          )}
         />
+
         <br />
-        <TextField
-          className={classes.field}
-          id="password"
-          label="Password"
-          variant="outlined"
-          // required
-          // error={!creds.password}
-          onChange={(e) => setCreds({ ...creds, password: e.target.value })}
+        <Controller
+          name="password"
+          control={control}
+          render={() => (
+            <TextField
+              className={classes.textField}
+              id="password"
+              label="Password"
+              variant="outlined"
+              // required
+              // error={!creds.password}
+              onChange={(e) => setCreds({ ...creds, password: e.target.value })}
+            />
+          )}
         />
+
         <br />
 
         <Button
@@ -115,11 +122,9 @@ const Login = () => {
           color="primary"
           endIcon={<ArrowRightIcon />}
           disabled={loading}
-          // onClick={async () => await checkLogin()}
         >
           {loading ? 'Wait' : 'Login'}
         </Button>
-        {/* <Button onClick={() => checkLogin()}>Check</Button> */}
       </form>
       <ToastContainer
         position="top-center"

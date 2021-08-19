@@ -6,11 +6,13 @@ import {
   LIST_ITEM_SET_LOADING,
   LIST_ITEM_ADD_LIST_ITEM,
   LIST_ITEM_DELETE_LIST_ITEM,
-  LIST_ITEM_UPDATE_LIST_ITEM
+  LIST_ITEM_UPDATE_LIST_ITEM,
+  LIST_ITEM_SET_TODO_ID
 } from '../../types/listItem';
 
 const initialState: listItemState = {
   listItems: [],
+  todoId: '',
   loading: false,
   error: ''
 };
@@ -57,6 +59,8 @@ const listItemReducer = (state = initialState, action: listItemAction) => {
       return { ...state, loading: action.payload };
     case LIST_ITEM_SET_ERROR:
       return { ...state, error: action.payload };
+    case LIST_ITEM_SET_TODO_ID:
+      return { ...state, todoId: action.payload };
     default:
       return state;
   }

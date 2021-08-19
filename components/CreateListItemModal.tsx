@@ -43,14 +43,14 @@ export default function SimpleModal({
 }) {
   const classes = useStyles();
   const { id, token } = useTypedSelector((state) => state.tokenInfo);
-  const { listItems } = useTypedSelector((state) => state.listItem);
+  const { todoId } = useTypedSelector((state) => state.listItem);
 
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     userId: id,
-    todoId: listItems[0].todo_id, // ----->kostyl here. When there is no listItems app crashes. Need a better way for getting todoId
+    todoId,
     token,
     todoTitle: '',
     isCompleted: false

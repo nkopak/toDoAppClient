@@ -5,6 +5,7 @@ export const LIST_ITEM_SET_ERROR = 'LIST_ITEM_SET_ERROR';
 export const LIST_ITEM_ADD_LIST_ITEM = 'LIST_ITEM_ADD_LIST_ITEM';
 export const LIST_ITEM_DELETE_LIST_ITEM = 'LIST_ITEM_DELETE_LIST_ITEM';
 export const LIST_ITEM_UPDATE_LIST_ITEM = 'LIST_ITEM_UPDATE_LIST_ITEM';
+export const LIST_ITEM_SET_TODO_ID = 'LIST_ITEM_SET_TODO_ID';
 
 export interface IListItem {
   id: string;
@@ -16,6 +17,7 @@ export interface IListItem {
 
 export interface listItemState {
   listItems: Array<IListItem>;
+  todoId: string;
   loading: boolean;
   error: string;
 }
@@ -71,10 +73,16 @@ interface SetListItemErrorAction {
   payload: string;
 }
 
+interface SetListItemTodoIdAction {
+  type: typeof LIST_ITEM_SET_TODO_ID;
+  payload: string;
+}
+
 export type listItemAction =
   | SetListItemsAction
   | AddListItemAction
   | UpdateListItemAction
   | DeleteListItemAction
   | SetListItemLoadingAction
-  | SetListItemErrorAction;
+  | SetListItemErrorAction
+  | SetListItemTodoIdAction;

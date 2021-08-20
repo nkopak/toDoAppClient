@@ -82,10 +82,8 @@ export const updateListItem =
     dispatch({ type: LIST_ITEM_SET_LOADING, payload: true });
     try {
       const response = await listItemService.updateListItem(data);
-      console.log(response);
 
       if (response) {
-        console.log(response);
         dispatch({ type: LIST_ITEM_UPDATE_LIST_ITEM, payload: response });
       }
     } catch (error) {

@@ -9,7 +9,7 @@ import CreateListModal from '../../components/CreateListModal';
 
 const Lists = () => {
   const dispatch = useDispatch();
-  const { id, token } = useTypedSelector((state) => state.tokenInfo);
+  const { id, firstName, token } = useTypedSelector((state) => state.tokenInfo);
   const { lists } = useTypedSelector((state) => state.list);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Lists = () => {
   return (
     <Container>
       <Typography variant="h2" component="h1" align="center">
-        User Lists
+        {firstName} Lists
       </Typography>
       <hr />
       {token && (

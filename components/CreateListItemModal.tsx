@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import useTypedSelector from '../hooks/useTypedSelector';
 import { createListItem } from '../store/actions/listItemActions';
 
@@ -42,19 +43,34 @@ export default function SimpleModal({
   modalTitle: string;
 }) {
   const classes = useStyles();
+  const router = useRouter();
+
   const { id, token } = useTypedSelector((state) => state.tokenInfo);
-  const { todoId } = useTypedSelector((state) => state.listItem);
+  // const { todoId } = useTypedSelector((state) => state.listItem);
 
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     userId: id,
-    todoId,
+    todoId: '',
     token,
     todoTitle: '',
     isCompleted: false
   });
+
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    const { todoId } = router.query;
+
+    async function fetchData() {
+      if (typeof todoId === 'string') {
+        setCreds({ ...creds, todoId });
+      }
+    }
+    fetchData();
+  }, [router.isReady]);
 
   const dispatch = useDispatch();
 

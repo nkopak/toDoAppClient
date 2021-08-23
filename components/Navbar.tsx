@@ -76,9 +76,20 @@ const Navbar = () => {
               Logout
             </Button>
           ) : (
-            <Button color="inherit" onClick={() => router.push('/auth/login')}>
-              Login
-            </Button>
+            <>
+              <Button
+                color="inherit"
+                onClick={() => router.push('/auth/register')}
+              >
+                Register
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => router.push('/auth/login')}
+              >
+                Login
+              </Button>
+            </>
           )}
         </Toolbar>
       </AppBar>

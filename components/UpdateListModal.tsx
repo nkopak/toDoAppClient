@@ -2,11 +2,14 @@ import React, { useState, FormEvent } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
   Button,
+  IconButton,
   Container,
   Modal,
   TextField,
   Typography
 } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -31,19 +34,23 @@ const useStyles = makeStyles((theme: Theme) =>
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3)
+    },
+    updateBtn: {
+      backgroundColor: '#FFEB0A',
+      margin: '10px'
     }
   })
 );
 export default function UpdateListModal({
-  buttonTitle,
+  // buttonTitle,
   modalTitle,
   listData
 }: {
-  buttonTitle: string;
+  // buttonTitle: string;
   modalTitle: string;
   listData: IList;
 }) {
-  const classes = useStyles();
+  const styles = useStyles();
   const { token } = useTypedSelector((state) => state.tokenInfo);
 
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -59,7 +66,7 @@ export default function UpdateListModal({
   const dispatch = useDispatch();
 
   const body = (
-    <Container style={modalStyle} className={classes.paper}>
+    <Container style={modalStyle} className={styles.paper}>
       <Typography id="simple-modal-title" variant="h5">
         {modalTitle}
       </Typography>
@@ -86,9 +93,13 @@ export default function UpdateListModal({
 
   return (
     <div>
-      <Button type="button" onClick={() => setOpen(true)}>
-        {buttonTitle}
-      </Button>
+      <IconButton
+        type="button"
+        className={styles.updateBtn}
+        onClick={() => setOpen(true)}
+      >
+        <EditIcon />
+      </IconButton>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -102,7 +113,7 @@ export default function UpdateListModal({
 }
 
 UpdateListModal.propTypes = {
-  buttonTitle: PropTypes.string.isRequired,
+  // buttonTitle: PropTypes.string.isRequired,
   modalTitle: PropTypes.string.isRequired,
   listData: PropTypes.shape({
     user_id: PropTypes.string,

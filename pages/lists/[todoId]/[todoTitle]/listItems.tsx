@@ -1,19 +1,32 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Container, Typography } from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  Breadcrumbs,
+  Link,
+  makeStyles
+} from '@material-ui/core';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import useTypedSelector from '../../../hooks/useTypedSelector';
-import TodoItem from '../../../components/TodoItem';
-import { IListItem } from '../../../types/listItem';
-import CreateListItemModal from '../../../components/CreateListItemModal';
+import useTypedSelector from '../../../../hooks/useTypedSelector';
+import TodoItem from '../../../../components/TodoItem';
+import { IListItem } from '../../../../types/listItem';
+import CreateListItemModal from '../../../../components/CreateListItemModal';
 import getListItems, {
   setTodoId
-} from '../../../store/actions/listItemActions';
+} from '../../../../store/actions/listItemActions';
+
+const useStyles = makeStyles({
+  breadcrumps: {
+    backgroundColor: '#E3F2FD'
+  }
+});
 
 const ListItems = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const styles = useStyles();
 
   const { listItems } = useTypedSelector((state) => state.listItem);
   const { id, token } = useTypedSelector((state) => state.tokenInfo);
@@ -32,12 +45,32 @@ const ListItems = () => {
     fetchData();
   }, [router.isReady]);
 
+  // console.log(router.asPath);
+
   return (
     <Container>
       <Typography variant="h2" component="h1" align="center">
-        List Title
+        {router.query.todoTitle}
       </Typography>
       <hr />
+      <Container className={styles.breadcrumps}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/">
+            Main
+          </Link>
+          <Link color="inherit" href="/lists">
+            Lists
+          </Link>
+          <Link
+            color="textPrimary"
+            href={`${router.asPath}`}
+            aria-current="page"
+          >
+            {router.query.todoTitle}
+          </Link>
+        </Breadcrumbs>
+      </Container>
+
       {router.isReady && (
         <CreateListItemModal
           buttonTitle="Add todo item"

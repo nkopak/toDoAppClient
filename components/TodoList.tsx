@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { Container, Typography, Button, makeStyles } from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  makeStyles,
+  IconButton,
+  Button
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Link from 'next/link';
 import { IList } from '../types/list';
 import { deleteList } from '../store/actions/listActions';
@@ -14,16 +20,17 @@ import getListItems from '../store/actions/listItemActions';
 const useStyles = makeStyles({
   container: {
     display: 'flex',
-    alignItems: 'center'
-  },
-  updateBtn: {
-    backgroundColor: '#EFB539',
-    margin: '10px'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   deleteBtn: {
     color: 'white',
-    backgroundColor: '#FA4353 ',
+    backgroundColor: '#FE5F55',
     margin: '10px'
+  },
+  btnDiv: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -42,29 +49,39 @@ const TodoList = ({ value }: { value: IList }) => {
 
   return (
     <Container className={styles.container}>
-      <Typography
-        variant="h5"
-        onClick={() => {
-          dispatch(getListItems(creds.userId, creds.id, token));
-        }}
-      >
-        <Link href={`/lists/${value.id}/listItems`}>{value.todoTitle}</Link>
-      </Typography>
+      <Link href={`/lists/${value.id}/${value.todoTitle}/listItems`}>
+        <Button
+          color="primary"
+          style={{ textTransform: 'none' }}
+          onClick={() => {
+            dispatch(getListItems(creds.userId, creds.id, token));
+          }}
+        >
+          <Typography
+            variant="h5"
+            onClick={() => {
+              dispatch(getListItems(creds.userId, creds.id, token));
+            }}
+          >
+            {value.todoTitle}
+          </Typography>
+        </Button>
+      </Link>
+      <div className={styles.btnDiv}>
+        <UpdateListModal
+          // buttonTitle="Edit"
+          modalTitle="Update list title"
+          listData={value}
+        />
 
-      <UpdateListModal
-        buttonTitle="Edit"
-        modalTitle="Update list title"
-        listData={value}
-      />
-
-      <Button
-        variant="contained"
-        className={styles.deleteBtn}
-        endIcon={<DeleteForeverIcon />}
-        onClick={() => dispatch(deleteList(creds))}
-      >
-        Delete
-      </Button>
+        <IconButton
+          className={styles.deleteBtn}
+          color="secondary"
+          onClick={() => dispatch(deleteList(creds))}
+        >
+          <HighlightOffIcon />
+        </IconButton>
+      </div>
     </Container>
   );
 };

@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Typography, makeStyles, Button } from '@material-ui/core';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import {
+  Container,
+  Typography,
+  makeStyles,
+  IconButton
+} from '@material-ui/core';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,16 +18,17 @@ import UpdateListItemModal from './UpdateListItemModal';
 const useStyles = makeStyles({
   container: {
     display: 'flex',
-    alignItems: 'center'
-  },
-  updateBtn: {
-    backgroundColor: '#EFB539',
-    margin: '10px'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   deleteBtn: {
     color: 'white',
-    backgroundColor: '#FA4353 ',
+    backgroundColor: '#FE5F55',
     margin: '10px'
+  },
+  btnDiv: {
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -38,24 +44,20 @@ const TodoListItem = ({ value }: { value: IListItem }) => {
     id: value.id,
     token
   });
-  // console.log(creds);
+
   return (
     <Container className={styles.container}>
       <Typography variant="h5">{value.todoTitle}</Typography>
-      <UpdateListItemModal
-        buttonTitle="Edit"
-        modalTitle="Edit todo item"
-        listItemData={value}
-      />
+      <div className={styles.btnDiv}>
+        <UpdateListItemModal modalTitle="Edit todo item" listItemData={value} />
 
-      <Button
-        variant="contained"
-        className={styles.deleteBtn}
-        endIcon={<DeleteForeverIcon />}
-        onClick={() => dispatch(deleteListItem(creds))}
-      >
-        Delete
-      </Button>
+        <IconButton
+          className={styles.deleteBtn}
+          onClick={() => dispatch(deleteListItem(creds))}
+        >
+          <HighlightOffIcon />
+        </IconButton>
+      </div>
     </Container>
   );
 };

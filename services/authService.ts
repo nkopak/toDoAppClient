@@ -49,6 +49,8 @@ const register = async (userData: User): Promise<any> => {
     return null;
   }
 
+  localStorage.setItem('token', response.data.tokens.access_token);
+
   return response;
 };
 

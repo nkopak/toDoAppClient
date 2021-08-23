@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Container,
   TextField,
@@ -13,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import signUp from '../../store/actions/registerActions';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import 'react-toastify/dist/ReactToastify.css';
+import getTokenInfo from '../../store/actions/tokenInfoActions';
 
 const useStyles = makeStyles({
   field: {
@@ -24,11 +26,14 @@ const useStyles = makeStyles({
 const Register: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const router = useRouter();
   const { handleSubmit, control } = useForm();
 
-  const register = useTypedSelector((state) => state.register);
+  const { registerStatus, inputError, loading } = useTypedSelector(
+    (state) => state.register
+  );
 
-  // const register = useTypedSelector((state) => state.register);
+  const { firstName } = useTypedSelector((state) => state.tokenInfo);
   const [creds, setCreds] = useState({
     firstName: '',
     lastName: '',
@@ -36,19 +41,42 @@ const Register: React.FC = () => {
     password: ''
   });
 
+  const [firstRender, setFirstRender] = useState(true);
+  const [flag, setFlag] = useState(false);
+
+  useEffect(() => {
+    if (!firstRender) {
+      if (registerStatus) {
+        toast.success(
+          `Hello ${firstName}!
+                 You successfully registered :)`
+        );
+        setTimeout(() => {
+          router.push(`/lists`);
+        }, 3000);
+      }
+      if (inputError && !registerStatus) {
+        toast.error('Invalid register info :(');
+      }
+    }
+    if (setFirstRender) {
+      setFirstRender(false);
+    }
+  }, [flag]);
+
   return (
     <Container>
       <form
         onSubmit={handleSubmit(async () => {
-          // e.preventDefault();
-          dispatch(signUp(creds));
-          // console.log(register);
+          await dispatch(signUp(creds));
+          await dispatch(getTokenInfo());
 
-          if (register.registerStatus) {
-            toast.success('You registered successfully!');
-          }
-          if (register.inputError) {
-            toast.error(register.inputError);
+          if (!firstRender) {
+            if (!flag) {
+              setFlag(true);
+            } else {
+              setFlag(false);
+            }
           }
         })}
       >
@@ -135,9 +163,9 @@ const Register: React.FC = () => {
           variant="contained"
           color="primary"
           endIcon={<ArrowRightIcon />}
-          disabled={register.loading}
+          disabled={loading}
         >
-          {register.loading ? 'Loading...' : 'Register'}
+          {loading ? 'Loading...' : 'Register'}
         </Button>
       </form>
       <ToastContainer

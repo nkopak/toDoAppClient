@@ -17,6 +17,7 @@ export interface IListItem {
 
 export interface listItemState {
   listItems: Array<IListItem>;
+  doneListItems: Array<IListItem>;
   todoId: string;
   loading: boolean;
   error: string;
@@ -34,6 +35,7 @@ export interface IUpdateListItemData {
   todoId: string;
   id: string;
   todoTitle: string;
+  isCompleted: boolean;
   token: string;
 }
 export interface IDeleteListItemData {

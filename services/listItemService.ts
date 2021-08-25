@@ -43,7 +43,7 @@ const updateListItem = async (data: IUpdateListItemData): Promise<any> => {
   if (!response) {
     return null;
   }
-  console.log(response);
+  // console.log(response.data[0]);
 
   return response.data[0];
 };

@@ -58,7 +58,7 @@ const TodoList = ({ value }: { value: IList }) => {
           }}
         >
           <Typography
-            variant="h5"
+            variant="h4"
             onClick={() => {
               dispatch(getListItems(creds.userId, creds.id, token));
             }}

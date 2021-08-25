@@ -12,6 +12,7 @@ import {
 
 const initialState: listItemState = {
   listItems: [],
+  doneListItems: [],
   todoId: '',
   loading: false,
   error: ''
@@ -19,8 +20,16 @@ const initialState: listItemState = {
 
 const listItemReducer = (state = initialState, action: listItemAction) => {
   switch (action.type) {
-    case LIST_ITEM_SET_LIST_ITEMS:
-      return { ...state, listItems: action.payload };
+    case LIST_ITEM_SET_LIST_ITEMS: {
+      const doneItems = action.payload.filter(
+        (item) => item.isCompleted === true
+      );
+      const undoneItems = action.payload.filter(
+        (item) => item.isCompleted === false
+      );
+
+      return { ...state, listItems: undoneItems, doneListItems: doneItems };
+    }
     case LIST_ITEM_ADD_LIST_ITEM: {
       const { listItems } = state;
       listItems.push(action.payload);
@@ -40,6 +49,7 @@ const listItemReducer = (state = initialState, action: listItemAction) => {
 
       if (itemForUpdate) {
         itemForUpdate.todoTitle = action.payload.todoTitle;
+        itemForUpdate.isCompleted = action.payload.isCompleted;
 
         updatedItems.push(itemForUpdate);
       }

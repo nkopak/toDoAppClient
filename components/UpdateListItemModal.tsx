@@ -59,6 +59,7 @@ export default function UpdateListItemModal({
     todoId: listItemData.todo_id,
     userId: listItemData.user_id,
     todoTitle: listItemData.todoTitle,
+    isCompleted: listItemData.isCompleted,
     token
   });
 
@@ -118,6 +119,7 @@ UpdateListItemModal.propTypes = {
     user_id: PropTypes.string,
     todo_id: PropTypes.string,
     id: PropTypes.string,
-    todoTitle: PropTypes.string
+    todoTitle: PropTypes.string,
+    isCompleted: PropTypes.bool
   }).isRequired
 };

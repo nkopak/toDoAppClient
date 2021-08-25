@@ -6,12 +6,16 @@ import {
   IconButton
 } from '@material-ui/core';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { IListItem } from '../types/listItem';
-import { deleteListItem } from '../store/actions/listItemActions';
+import getListItems, {
+  deleteListItem,
+  updateListItem
+} from '../store/actions/listItemActions';
 import useTypedSelector from '../hooks/useTypedSelector';
 import UpdateListItemModal from './UpdateListItemModal';
 
@@ -21,9 +25,17 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'space-between'
   },
+  doneTitle: {
+    textDecoration: 'line-through',
+    color: '#DCDCDC'
+  },
   deleteBtn: {
     color: 'white',
     backgroundColor: '#FE5F55',
+    margin: '10px'
+  },
+  doneBtn: {
+    backgroundColor: '#50A562',
     margin: '10px'
   },
   btnDiv: {
@@ -32,22 +44,53 @@ const useStyles = makeStyles({
   }
 });
 
-const TodoListItem = ({ value }: { value: IListItem }) => {
+const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
 
   const { token } = useTypedSelector((state) => state.tokenInfo);
 
   const [creds] = useState({
-    userId: value.user_id,
-    todoId: value.todo_id,
     id: value.id,
+    todoId: value.todo_id,
+    userId: value.user_id,
+    todoTitle: value.todoTitle,
+    isCompleted: value.isCompleted,
     token
   });
 
   return (
     <Container className={styles.container}>
-      <Typography variant="h5">{value.todoTitle}</Typography>
+      <div className={styles.btnDiv}>
+        {!done && (
+          <IconButton className={styles.doneBtn}>
+            <CheckBoxOutlineBlankIcon
+              onClick={() => {
+                dispatch(updateListItem({ ...creds, isCompleted: true }));
+                dispatch(getListItems(creds.userId, creds.todoId, token));
+              }}
+            />
+          </IconButton>
+        )}
+
+        {done && (
+          <IconButton className={styles.doneBtn}>
+            <CheckBoxIcon
+              onClick={() => {
+                dispatch(updateListItem({ ...creds, isCompleted: false }));
+                dispatch(getListItems(creds.userId, creds.todoId, token));
+              }}
+            />
+          </IconButton>
+        )}
+
+        <Typography
+          variant="h4"
+          className={value.isCompleted ? styles.doneTitle : ''}
+        >
+          {value.todoTitle}
+        </Typography>
+      </div>
       <div className={styles.btnDiv}>
         <UpdateListItemModal modalTitle="Edit todo item" listItemData={value} />
 
@@ -67,8 +110,10 @@ TodoListItem.propTypes = {
     user_id: PropTypes.string,
     todo_id: PropTypes.string,
     id: PropTypes.string,
-    todoTitle: PropTypes.string
-  }).isRequired
+    todoTitle: PropTypes.string,
+    isCompleted: PropTypes.bool
+  }).isRequired,
+  done: PropTypes.bool.isRequired
 };
 
 export default TodoListItem;

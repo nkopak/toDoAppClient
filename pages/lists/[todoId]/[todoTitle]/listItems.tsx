@@ -29,6 +29,7 @@ const ListItems = () => {
   const styles = useStyles();
 
   const { listItems } = useTypedSelector((state) => state.listItem);
+  const { doneListItems } = useTypedSelector((state) => state.listItem);
   const { id, token } = useTypedSelector((state) => state.tokenInfo);
 
   useEffect(() => {
@@ -80,8 +81,17 @@ const ListItems = () => {
 
       {listItems &&
         listItems.map((item: IListItem) => (
-          <TodoItem key={item.id} value={item} />
+          <TodoItem key={item.id} value={item} done={false} />
         ))}
+
+      {doneListItems && (
+        <div>
+          <h2>Finished tasks</h2>
+          {doneListItems.map((item) => (
+            <TodoItem key={item.id} value={item} done />
+          ))}
+        </div>
+      )}
 
       <ToastContainer
         position="top-center"

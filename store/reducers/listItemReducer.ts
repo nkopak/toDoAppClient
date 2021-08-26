@@ -8,7 +8,8 @@ import {
   LIST_ITEM_ADD_LIST_ITEM,
   LIST_ITEM_DELETE_LIST_ITEM,
   LIST_ITEM_UPDATE_LIST_ITEM,
-  LIST_ITEM_SET_TODO_ID
+  LIST_ITEM_SET_TODO_ID,
+  IListItem
 } from '../../types/listItem';
 
 const initialState: listItemState = {
@@ -19,40 +20,33 @@ const initialState: listItemState = {
   error: ''
 };
 
+const arraySortingByListTitle = (arr: Array<IListItem>) => {
+  arr.sort((a: IListItem, b: IListItem) => {
+    const titleA = a.todoTitle.toUpperCase();
+    const titleB = b.todoTitle.toUpperCase();
+    if (titleA < titleB) {
+      return -1;
+    }
+    if (titleA > titleB) {
+      return 1;
+    }
+
+    return 0;
+  });
+};
+
 const listItemReducer = (state = initialState, action: listItemAction) => {
   switch (action.type) {
     case LIST_ITEM_SET_LIST_ITEMS: {
       const doneItems = action.payload.filter(
         (item) => item.isCompleted === true
       );
-      doneItems.sort((a, b) => {
-        const titleA = a.todoTitle.toUpperCase();
-        const titleB = b.todoTitle.toUpperCase();
-        if (titleA < titleB) {
-          return -1;
-        }
-        if (titleA > titleB) {
-          return 1;
-        }
-
-        return 0;
-      });
+      arraySortingByListTitle(doneItems);
 
       const undoneItems = action.payload.filter(
         (item) => item.isCompleted === false
       );
-      undoneItems.sort((a, b) => {
-        const titleA = a.todoTitle.toUpperCase();
-        const titleB = b.todoTitle.toUpperCase();
-        if (titleA < titleB) {
-          return -1;
-        }
-        if (titleA > titleB) {
-          return 1;
-        }
-
-        return 0;
-      });
+      arraySortingByListTitle(undoneItems);
 
       return { ...state, listItems: undoneItems, doneListItems: doneItems };
     }
@@ -60,18 +54,7 @@ const listItemReducer = (state = initialState, action: listItemAction) => {
     case LIST_ITEM_ADD_LIST_ITEM: {
       const { listItems } = state;
       listItems.push(action.payload);
-      listItems.sort((a, b) => {
-        const titleA = a.todoTitle.toUpperCase();
-        const titleB = b.todoTitle.toUpperCase();
-        if (titleA < titleB) {
-          return -1;
-        }
-        if (titleA > titleB) {
-          return 1;
-        }
-
-        return 0;
-      });
+      arraySortingByListTitle(listItems);
 
       return { ...state, listItems };
     }

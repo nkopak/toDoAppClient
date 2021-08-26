@@ -26,10 +26,7 @@ const Lists = () => {
   const { lists } = useTypedSelector((state) => state.list);
 
   useEffect(() => {
-    async function fetchData() {
-      await dispatch(getLists(id, token));
-    }
-    fetchData();
+    dispatch(getLists(id, token));
   }, []);
 
   return (

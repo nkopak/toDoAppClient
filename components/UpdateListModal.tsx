@@ -58,7 +58,7 @@ export default function UpdateListModal({
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     id: listData.id,
-    userId: listData.user_id,
+    user_id: listData.user_id,
     token,
     todoTitle: listData.todoTitle
   });

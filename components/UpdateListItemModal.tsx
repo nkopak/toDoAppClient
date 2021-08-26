@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2, 4, 3)
     },
     updateBtn: {
-      backgroundColor: '#FFEB0A',
+      // backgroundColor: '#FFEB0A',
       margin: '10px'
     }
   })
@@ -56,8 +56,8 @@ export default function UpdateListItemModal({
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     id: listItemData.id,
-    todoId: listItemData.todo_id,
-    userId: listItemData.user_id,
+    todo_id: listItemData.todo_id,
+    user_id: listItemData.user_id,
     todoTitle: listItemData.todoTitle,
     isCompleted: listItemData.isCompleted,
     token

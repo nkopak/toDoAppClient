@@ -1,5 +1,7 @@
+/* eslint-disable camelcase */
 export const LIST_SET_LISTS = 'LIST_SET_LISTS';
-export const LIST_SET_LOADING = 'LIST_SET_LOADING';
+export const LIST_START_LOADING = 'LIST_START_LOADING';
+export const LIST_END_LOADING = 'LIST_END_LOADING';
 export const LIST_SET_ERROR = 'LIST_SET_ERROR';
 export const LIST_ADD_LIST = 'LIST_ADD_LIST';
 export const LIST_DELETE_LIST = 'LIST_DELETE_LIST';
@@ -7,7 +9,6 @@ export const LIST_UPDATE_LIST = 'LIST_UPDATE_LIST';
 
 export interface IList {
   id: string;
-  // eslint-disable-next-line camelcase
   user_id: string;
   todoTitle: string;
 }
@@ -17,20 +18,20 @@ export interface listState {
   error: string;
 }
 export interface ICreateListData {
-  userId: string;
+  user_id: string;
   todoTitle: string;
   token: string;
 }
 
 export interface IDeleteListData {
-  userId: string;
+  user_id: string;
   id: string;
   todoTitle: string;
   token: string;
 }
 
 export interface IUpdateListData {
-  userId: string;
+  user_id: string;
   id: string;
   todoTitle: string;
   token: string;
@@ -56,9 +57,12 @@ interface DeleteListAction {
   payload: IDeleteListData;
 }
 
-interface SetListLoadingAction {
-  type: typeof LIST_SET_LOADING;
-  payload: boolean;
+interface StartListLoadingAction {
+  type: typeof LIST_START_LOADING;
+}
+
+interface EndListLoadingAction {
+  type: typeof LIST_END_LOADING;
 }
 
 interface SetListErrorAction {
@@ -68,8 +72,9 @@ interface SetListErrorAction {
 
 export type listAction =
   | SetListsAction
-  | SetListLoadingAction
   | SetListErrorAction
   | AddListAction
   | UpdateListAction
-  | DeleteListAction;
+  | DeleteListAction
+  | StartListLoadingAction
+  | EndListLoadingAction;

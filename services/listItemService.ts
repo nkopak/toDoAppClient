@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import {
   ICreateListItemData,
   IDeleteListItemData,
@@ -7,12 +6,12 @@ import {
 import axiosInstance from './axiosInstance';
 
 const loadListItems = async (
-  user_id: string,
-  todo_id: string,
+  userId: string,
+  todoId: string,
   token: string
 ): Promise<any> => {
   const response = await axiosInstance(token).get(
-    `/users/${user_id}/lists/${todo_id}/todoItems`
+    `/users/${userId}/lists/${todoId}/todoItems`
   );
 
   if (!response) {
@@ -24,7 +23,7 @@ const loadListItems = async (
 
 const createListItem = async (data: ICreateListItemData): Promise<any> => {
   const response = await axiosInstance(data.token).post(
-    `/users/${data.user_id}/lists/${data.todo_id}/todoItems`,
+    `/users/${data.userId}/lists/${data.todoId}/todoItems`,
     data
   );
 
@@ -37,7 +36,7 @@ const createListItem = async (data: ICreateListItemData): Promise<any> => {
 
 const updateListItem = async (data: IUpdateListItemData): Promise<any> => {
   const response = await axiosInstance(data.token).put(
-    `/users/${data.user_id}/lists/${data.todo_id}/todoItems/${data.id}`,
+    `/users/${data.userId}/lists/${data.todoId}/todoItems/${data.id}`,
     data
   );
 
@@ -51,7 +50,7 @@ const updateListItem = async (data: IUpdateListItemData): Promise<any> => {
 
 const deleteListItem = async (data: IDeleteListItemData): Promise<any> => {
   const response = await axiosInstance(data.token).delete(
-    `/users/${data.user_id}/lists/${data.todo_id}/todoItems/${data.id}`
+    `/users/${data.userId}/lists/${data.todoId}/todoItems/${data.id}`
   );
   if (!response) {
     return null;

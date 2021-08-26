@@ -18,7 +18,7 @@ const loadLists = async (userId: string, token: string): Promise<any> => {
 
 const createList = async (data: ICreateListData): Promise<any> => {
   const response = await axiosInstance(data.token).post(
-    `/users/${data.user_id}/lists`,
+    `/users/${data.userId}/lists`,
     data
   );
 
@@ -27,7 +27,7 @@ const createList = async (data: ICreateListData): Promise<any> => {
 
 const updateList = async (data: IUpdateListData): Promise<any> => {
   const response = await axiosInstance(data.token).put(
-    `/users/${data.user_id}/lists/${data.id}`,
+    `/users/${data.userId}/lists/${data.id}`,
     data
   );
 
@@ -36,7 +36,7 @@ const updateList = async (data: IUpdateListData): Promise<any> => {
 
 const deleteList = async (data: IDeleteListData): Promise<any> => {
   const response = await axiosInstance(data.token).delete(
-    `/users/${data.user_id}/lists/${data.id}`
+    `/users/${data.userId}/lists/${data.id}`
   );
 
   return response.data[0];

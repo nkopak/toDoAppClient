@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export const LIST_SET_LISTS = 'LIST_SET_LISTS';
 export const LIST_START_LOADING = 'LIST_START_LOADING';
 export const LIST_END_LOADING = 'LIST_END_LOADING';
@@ -9,7 +8,7 @@ export const LIST_UPDATE_LIST = 'LIST_UPDATE_LIST';
 
 export interface IList {
   id: string;
-  user_id: string;
+  userId: string;
   todoTitle: string;
 }
 export interface listState {
@@ -18,20 +17,20 @@ export interface listState {
   error: string;
 }
 export interface ICreateListData {
-  user_id: string;
+  userId: string;
   todoTitle: string;
   token: string;
 }
 
 export interface IDeleteListData {
-  user_id: string;
+  userId: string;
   id: string;
   todoTitle: string;
   token: string;
 }
 
 export interface IUpdateListData {
-  user_id: string;
+  userId: string;
   id: string;
   todoTitle: string;
   token: string;

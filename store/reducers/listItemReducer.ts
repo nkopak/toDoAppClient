@@ -79,7 +79,7 @@ const listItemReducer = (state = initialState, action: listItemAction) => {
     case LIST_ITEM_UPDATE_LIST_ITEM: {
       const { listItems } = state;
 
-      const itemIndex = listItems.findIndex(
+      const itemIndex: number = listItems.findIndex(
         (item) => item.id === action.payload.id
       );
 

@@ -52,8 +52,8 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
 
   const [creds] = useState({
     id: value.id,
-    todo_id: value.todo_id,
-    user_id: value.user_id,
+    todoId: value.todoId,
+    userId: value.userId,
     todoTitle: value.todoTitle,
     isCompleted: value.isCompleted,
     token
@@ -67,7 +67,7 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
             <CheckBoxOutlineBlankIcon
               onClick={() => {
                 dispatch(updateListItem({ ...creds, isCompleted: true }));
-                dispatch(getListItems(creds.user_id, creds.todo_id, token));
+                dispatch(getListItems(creds.userId, creds.todoId, token));
               }}
             />
           </IconButton>
@@ -78,7 +78,7 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
             <CheckBoxIcon
               onClick={() => {
                 dispatch(updateListItem({ ...creds, isCompleted: false }));
-                dispatch(getListItems(creds.user_id, creds.todo_id, token));
+                dispatch(getListItems(creds.userId, creds.todoId, token));
               }}
             />
           </IconButton>
@@ -107,8 +107,8 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
 
 TodoListItem.propTypes = {
   value: PropTypes.shape({
-    user_id: PropTypes.string,
-    todo_id: PropTypes.string,
+    userId: PropTypes.string,
+    todoId: PropTypes.string,
     id: PropTypes.string,
     todoTitle: PropTypes.string,
     isCompleted: PropTypes.bool

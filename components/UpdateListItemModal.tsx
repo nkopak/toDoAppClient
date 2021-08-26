@@ -56,8 +56,8 @@ export default function UpdateListItemModal({
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     id: listItemData.id,
-    todo_id: listItemData.todo_id,
-    user_id: listItemData.user_id,
+    todoId: listItemData.todoId,
+    userId: listItemData.userId,
     todoTitle: listItemData.todoTitle,
     isCompleted: listItemData.isCompleted,
     token
@@ -116,8 +116,8 @@ export default function UpdateListItemModal({
 UpdateListItemModal.propTypes = {
   modalTitle: PropTypes.string.isRequired,
   listItemData: PropTypes.shape({
-    user_id: PropTypes.string,
-    todo_id: PropTypes.string,
+    userId: PropTypes.string,
+    todoId: PropTypes.string,
     id: PropTypes.string,
     todoTitle: PropTypes.string,
     isCompleted: PropTypes.bool

@@ -30,12 +30,12 @@ const useStyles = makeStyles({
     color: '#DCDCDC'
   },
   deleteBtn: {
-    color: 'white',
-    backgroundColor: '#FE5F55',
+    // color: 'white',
+    // backgroundColor: '#FE5F55',
     margin: '10px'
   },
   doneBtn: {
-    backgroundColor: '#50A562',
+    // backgroundColor: '#50A562',
     margin: '10px'
   },
   btnDiv: {
@@ -52,8 +52,8 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
 
   const [creds] = useState({
     id: value.id,
-    todoId: value.todo_id,
-    userId: value.user_id,
+    todo_id: value.todo_id,
+    user_id: value.user_id,
     todoTitle: value.todoTitle,
     isCompleted: value.isCompleted,
     token
@@ -67,7 +67,7 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
             <CheckBoxOutlineBlankIcon
               onClick={() => {
                 dispatch(updateListItem({ ...creds, isCompleted: true }));
-                dispatch(getListItems(creds.userId, creds.todoId, token));
+                dispatch(getListItems(creds.user_id, creds.todo_id, token));
               }}
             />
           </IconButton>
@@ -78,7 +78,7 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
             <CheckBoxIcon
               onClick={() => {
                 dispatch(updateListItem({ ...creds, isCompleted: false }));
-                dispatch(getListItems(creds.userId, creds.todoId, token));
+                dispatch(getListItems(creds.user_id, creds.todo_id, token));
               }}
             />
           </IconButton>

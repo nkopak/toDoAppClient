@@ -13,9 +13,7 @@ import useTypedSelector from '../../../../hooks/useTypedSelector';
 import TodoItem from '../../../../components/TodoItem';
 import { IListItem } from '../../../../types/listItem';
 import CreateListItemModal from '../../../../components/CreateListItemModal';
-import getListItems, {
-  setTodoId
-} from '../../../../store/actions/listItemActions';
+import getListItems from '../../../../store/actions/listItemActions';
 
 const useStyles = makeStyles({
   breadcrumps: {
@@ -37,16 +35,11 @@ const ListItems = () => {
 
     const { todoId } = router.query;
 
-    async function fetchData() {
-      if (typeof todoId === 'string') {
-        await dispatch(getListItems(id, todoId, token));
-        await dispatch(setTodoId(todoId));
-      }
+    if (typeof todoId === 'string') {
+      dispatch(getListItems(id, todoId, token));
+      // dispatch(setTodoId(todoId));
     }
-    fetchData();
   }, [router.isReady]);
-
-  // console.log(router.asPath);
 
   return (
     <Container>

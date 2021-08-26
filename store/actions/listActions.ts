@@ -9,8 +9,9 @@ import {
   LIST_DELETE_LIST,
   LIST_SET_ERROR,
   LIST_SET_LISTS,
-  LIST_SET_LOADING,
-  LIST_UPDATE_LIST
+  LIST_UPDATE_LIST,
+  LIST_START_LOADING,
+  LIST_END_LOADING
 } from '../../types/list';
 import { RootState } from '../index';
 
@@ -20,8 +21,7 @@ const getLists =
     token: string
   ): ThunkAction<void, RootState, null, listAction> =>
   async (dispatch) => {
-    dispatch({ type: LIST_SET_LOADING, payload: true });
-    dispatch({ type: LIST_SET_ERROR, payload: '' });
+    dispatch({ type: LIST_START_LOADING });
     try {
       const response = await listService.loadLists(userId, token);
       if (response) {
@@ -30,15 +30,14 @@ const getLists =
     } catch (error) {
       dispatch({ type: LIST_SET_ERROR, payload: error.message });
     } finally {
-      dispatch({ type: LIST_SET_LOADING, payload: false });
+      dispatch({ type: LIST_END_LOADING });
     }
   };
 
 export const createList =
   (data: ICreateListData): ThunkAction<void, RootState, null, listAction> =>
   async (dispatch) => {
-    dispatch({ type: LIST_SET_LOADING, payload: true });
-    dispatch({ type: LIST_SET_ERROR, payload: '' });
+    dispatch({ type: LIST_START_LOADING });
     try {
       const response = await listService.createList(data);
       if (response) {
@@ -47,15 +46,14 @@ export const createList =
     } catch (error) {
       dispatch({ type: LIST_SET_ERROR, payload: error.message });
     } finally {
-      dispatch({ type: LIST_SET_LOADING, payload: false });
+      dispatch({ type: LIST_END_LOADING });
     }
   };
 
 export const updateList =
   (data: IUpdateListData): ThunkAction<void, RootState, null, listAction> =>
   async (dispatch) => {
-    dispatch({ type: LIST_SET_LOADING, payload: true });
-    dispatch({ type: LIST_SET_ERROR, payload: '' });
+    dispatch({ type: LIST_START_LOADING });
     try {
       const response = await listService.updateList(data);
       if (response) {
@@ -64,15 +62,14 @@ export const updateList =
     } catch (error) {
       dispatch({ type: LIST_SET_ERROR, payload: error.message });
     } finally {
-      dispatch({ type: LIST_SET_LOADING, payload: false });
+      dispatch({ type: LIST_END_LOADING });
     }
   };
 
 export const deleteList =
   (data: IDeleteListData): ThunkAction<void, RootState, null, listAction> =>
   async (dispatch) => {
-    dispatch({ type: LIST_SET_LOADING, payload: true });
-    dispatch({ type: LIST_SET_ERROR, payload: '' });
+    dispatch({ type: LIST_START_LOADING });
     try {
       const response = await listService.deleteList(data);
 
@@ -82,7 +79,7 @@ export const deleteList =
     } catch (error) {
       dispatch({ type: LIST_SET_ERROR, payload: error.message });
     } finally {
-      dispatch({ type: LIST_SET_LOADING, payload: false });
+      dispatch({ type: LIST_END_LOADING });
     }
   };
 

@@ -41,7 +41,7 @@ const TodoList = ({ value }: { value: IList }) => {
   const { token } = useTypedSelector((state) => state.tokenInfo);
 
   const [creds] = useState({
-    userId: value.user_id,
+    user_id: value.user_id,
     id: value.id,
     todoTitle: value.todoTitle,
     token
@@ -54,13 +54,13 @@ const TodoList = ({ value }: { value: IList }) => {
           color="primary"
           style={{ textTransform: 'none' }}
           onClick={() => {
-            dispatch(getListItems(creds.userId, creds.id, token));
+            dispatch(getListItems(creds.user_id, creds.id, token));
           }}
         >
           <Typography
             variant="h4"
             onClick={() => {
-              dispatch(getListItems(creds.userId, creds.id, token));
+              dispatch(getListItems(creds.user_id, creds.id, token));
             }}
           >
             {value.todoTitle}

@@ -48,7 +48,7 @@ export default function SimpleModal({
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
-    userId: id,
+    user_id: id,
     token,
     todoTitle: ''
   });

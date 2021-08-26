@@ -43,6 +43,7 @@ const getListItems =
         todoId,
         token
       );
+
       if (response) {
         dispatch({ type: LIST_ITEM_SET_LIST_ITEMS, payload: response });
       }

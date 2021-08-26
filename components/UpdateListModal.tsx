@@ -58,7 +58,7 @@ export default function UpdateListModal({
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
     id: listData.id,
-    user_id: listData.user_id,
+    userId: listData.userId,
     token,
     todoTitle: listData.todoTitle
   });
@@ -116,7 +116,7 @@ UpdateListModal.propTypes = {
   // buttonTitle: PropTypes.string.isRequired,
   modalTitle: PropTypes.string.isRequired,
   listData: PropTypes.shape({
-    user_id: PropTypes.string,
+    userId: PropTypes.string,
     id: PropTypes.string,
     todoTitle: PropTypes.string
   }).isRequired

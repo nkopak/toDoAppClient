@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export const LIST_ITEM_SET_LIST_ITEMS = 'LIST_ITEM_SET_LIST_ITEMS';
 export const LIST_ITEM_START_LOADING = 'LIST_ITEM_START_LOADING';
 export const LIST_ITEM_END_LOADING = 'LIST_ITEM_END_LOADING';
@@ -10,8 +9,8 @@ export const LIST_ITEM_SET_TODO_ID = 'LIST_ITEM_SET_TODO_ID';
 
 export interface IListItem {
   id: string;
-  todo_id: string;
-  user_id: string;
+  todoId: string;
+  userId: string;
   todoTitle: string;
   isCompleted: boolean;
 }
@@ -25,23 +24,23 @@ export interface listItemState {
 }
 
 export interface ICreateListItemData {
-  user_id: string;
-  todo_id: string;
+  userId: string;
+  todoId: string;
   todoTitle: string;
   token: string;
 }
 
 export interface IUpdateListItemData {
-  user_id: string;
-  todo_id: string;
+  userId: string;
+  todoId: string;
   id: string;
   todoTitle: string;
   isCompleted: boolean;
   token: string;
 }
 export interface IDeleteListItemData {
-  user_id: string;
-  todo_id: string;
+  userId: string;
+  todoId: string;
   id: string;
   token: string;
 }

@@ -52,8 +52,8 @@ export default function SimpleModal({
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [creds, setCreds] = useState({
-    user_id: id,
-    todo_id: '',
+    userId: id,
+    todoId: '',
     token,
     todoTitle: '',
     isCompleted: false
@@ -66,7 +66,7 @@ export default function SimpleModal({
 
     async function fetchData() {
       if (typeof todoId === 'string') {
-        setCreds({ ...creds, todo_id: todoId });
+        setCreds({ ...creds, todoId });
       }
     }
     fetchData();

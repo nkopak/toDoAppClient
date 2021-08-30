@@ -5,8 +5,8 @@ import {
   makeStyles,
   IconButton
 } from '@material-ui/core';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
@@ -66,6 +66,7 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
           <IconButton className={styles.doneBtn}>
             <CheckBoxOutlineBlankIcon
               onClick={() => {
+                console.log('Clicked');
                 dispatch(updateListItem({ ...creds, isCompleted: true }));
                 dispatch(getListItems(creds.userId, creds.todoId, token));
               }}
@@ -77,6 +78,8 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
           <IconButton className={styles.doneBtn}>
             <CheckBoxIcon
               onClick={() => {
+                console.log('Clicked');
+
                 dispatch(updateListItem({ ...creds, isCompleted: false }));
                 dispatch(getListItems(creds.userId, creds.todoId, token));
               }}
@@ -98,7 +101,7 @@ const TodoListItem = ({ value, done }: { value: IListItem; done: boolean }) => {
           className={styles.deleteBtn}
           onClick={() => dispatch(deleteListItem(creds))}
         >
-          <HighlightOffIcon />
+          <DeleteForeverIcon />
         </IconButton>
       </div>
     </Container>

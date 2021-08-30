@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   Link,
   makeStyles
+  // CircularProgress
 } from '@material-ui/core';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
@@ -14,6 +15,7 @@ import TodoItem from '../../../../components/TodoItem';
 import { IListItem } from '../../../../types/listItem';
 import CreateListItemModal from '../../../../components/CreateListItemModal';
 import getListItems from '../../../../store/actions/listItemActions';
+// import Loader from '../../../../components/Loader/Loader';
 
 const useStyles = makeStyles({
   breadcrumps: {
@@ -43,6 +45,8 @@ const ListItems = () => {
 
   return (
     <Container>
+      {/* {loading && <Loader />} */}
+
       <Typography variant="h2" component="h1" align="center">
         {router.query.todoTitle}
       </Typography>
@@ -77,7 +81,7 @@ const ListItems = () => {
           <TodoItem key={item.id} value={item} done={false} />
         ))}
 
-      {doneListItems && (
+      {doneListItems.length > 0 && (
         <div>
           <h2>Finished tasks</h2>
           {doneListItems.map((item) => (

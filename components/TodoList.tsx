@@ -9,7 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Link from 'next/link';
 import { IList } from '../types/list';
 import { deleteList } from '../store/actions/listActions';
@@ -24,8 +24,8 @@ const useStyles = makeStyles({
     justifyContent: 'space-between'
   },
   deleteBtn: {
-    color: 'white',
-    backgroundColor: '#FE5F55',
+    // color: 'white',
+    // backgroundColor: '#FE5F55',
     margin: '10px'
   },
   btnDiv: {
@@ -51,7 +51,7 @@ const TodoList = ({ value }: { value: IList }) => {
     <Container className={styles.container}>
       <Link href={`/lists/${value.id}/${value.todoTitle}/listItems`}>
         <Button
-          color="primary"
+          // color="primary"
           style={{ textTransform: 'none' }}
           onClick={() => {
             dispatch(getListItems(creds.userId, creds.id, token));
@@ -76,10 +76,9 @@ const TodoList = ({ value }: { value: IList }) => {
 
         <IconButton
           className={styles.deleteBtn}
-          color="secondary"
           onClick={() => dispatch(deleteList(creds))}
         >
-          <HighlightOffIcon />
+          <DeleteForeverIcon />
         </IconButton>
       </div>
     </Container>

@@ -1,10 +1,10 @@
-/**
- *
- * @returns {TSX.Element}: The TSX code for home page
- */
+import React from 'react';
+import Menu from '../components/Menu/Menu';
+
 const Home = () => (
   <div>
-    <h1>Main</h1>
+    {/* <h1>Main</h1> */}
+    <Menu />
   </div>
 );
 

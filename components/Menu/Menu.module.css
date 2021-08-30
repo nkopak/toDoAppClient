@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 30%;
+  height: 40%;
+  left: 50%;
+  top: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: #e3f2fd;
+  /* border-radius: 30px; */
+  border-top: 20px solid #2196f3;
+}
+
+.footer {
+  background-color: #2196f3;
+  height: 15%;
+  width: 100%;
+}
+
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* #64b5f6 */

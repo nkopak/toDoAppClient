@@ -4,12 +4,14 @@ import {
   TOKEN_INFO_SET_ID,
   TOKEN_INFO_SET_FIRST_NAME,
   TOKEN_INFO_SET_ERROR,
-  TOKEN_INFO_SET_TOKEN
+  TOKEN_INFO_SET_TOKEN,
+  TOKEN_INFO_SET_ROLE
 } from '../../types/tokenInfo';
 
 const initialState: tokenInfoState = {
   id: '',
   firstName: '',
+  role: '',
   token: '',
   error: ''
 };
@@ -25,6 +27,11 @@ const tokenInfoReducer = (state = initialState, action: tokenInfoAction) => {
       return {
         ...state,
         firstName: action.payload
+      };
+    case TOKEN_INFO_SET_ROLE:
+      return {
+        ...state,
+        role: action.payload
       };
     case TOKEN_INFO_SET_TOKEN:
       return {

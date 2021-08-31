@@ -1,6 +1,7 @@
 import {
   userAction,
   userState,
+  USER_DELETE_USER,
   USER_END_LOADING,
   USER_GET_USER,
   USER_SET_ERROR,
@@ -34,6 +35,13 @@ const userReducer = (state = initialState, action: userAction) => {
         lastName: action.payload.lastName,
         email: action.payload.email,
         password: action.payload.password
+      };
+    case USER_DELETE_USER:
+      return {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
       };
     case USER_SET_ERROR:
       return { ...state, error: action.payload };

@@ -3,9 +3,15 @@ import React, { useState, useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { useRouter } from 'next/router';
 import useTypedSelector from '../../hooks/useTypedSelector';
-import getUser, { updateUser } from '../../store/actions/userActions';
+import getUser, {
+  deleteUser,
+  updateUser
+} from '../../store/actions/userActions';
 import styles from './userInfo.module.css';
+import { signout } from '../../store/actions/loginActions';
+import { deleteTokenInfo } from '../../store/actions/tokenInfoActions';
 
 const useStyles = makeStyles({
   field: {
@@ -15,6 +21,7 @@ const useStyles = makeStyles({
 
 const UserInfo = () => {
   const classes = useStyles();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const { id, token, role } = useTypedSelector((state) => state.tokenInfo);
@@ -128,7 +135,16 @@ const UserInfo = () => {
       </div>
 
       <div>
-        <Button>Delete Account</Button>
+        <Button
+          onClick={() => {
+            dispatch(deleteUser(id, token));
+            dispatch(signout());
+            dispatch(deleteTokenInfo());
+            router.push('/auth/login');
+          }}
+        >
+          Delete Account
+        </Button>
       </div>
     </div>
   );

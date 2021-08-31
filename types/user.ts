@@ -34,7 +34,6 @@ interface UpdateUserActions {
 
 interface DeleteUserActions {
   type: typeof USER_DELETE_USER;
-  payload: IUser;
 }
 
 interface SetUserErrorActions {

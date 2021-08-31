@@ -7,6 +7,7 @@ import {
   TOKEN_INFO_SET_ERROR,
   TOKEN_INFO_SET_FIRST_NAME,
   TOKEN_INFO_SET_ID,
+  TOKEN_INFO_SET_ROLE,
   TOKEN_INFO_SET_TOKEN
 } from '../../types/tokenInfo';
 import { RootState } from '../index';
@@ -22,6 +23,10 @@ const getTokenInfo =
         dispatch({
           type: TOKEN_INFO_SET_FIRST_NAME,
           payload: tokenInfo.firstName
+        });
+        dispatch({
+          type: TOKEN_INFO_SET_ROLE,
+          payload: tokenInfo.role
         });
         dispatch({ type: TOKEN_INFO_SET_TOKEN, payload: token });
       }

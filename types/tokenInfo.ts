@@ -1,17 +1,20 @@
 export const TOKEN_INFO_SET_ID = 'TOKEN_INFO_SET_ID';
 export const TOKEN_INFO_SET_FIRST_NAME = 'TOKEN_INFO_SET_FIRST_NAME';
+export const TOKEN_INFO_SET_ROLE = 'TOKEN_INFO_SET_ROLE';
 export const TOKEN_INFO_SET_ERROR = 'TOKEN_INFO_SET_ERROR';
 export const TOKEN_INFO_SET_TOKEN = 'TOKEN_INFO_SET_TOKEN';
 
 export interface ITokenInfo {
   id: string;
   firstName: string;
+  role: string;
   token: string;
 }
 
 export interface tokenInfoState {
   id: string;
   firstName: string;
+  role: string;
   token: string;
   error: string;
 }
@@ -23,6 +26,11 @@ export interface SetTokenInfoId {
 
 export interface SetTokenInfoFirstName {
   type: typeof TOKEN_INFO_SET_FIRST_NAME;
+  payload: string;
+}
+
+export interface SetTokenInfoRole {
+  type: typeof TOKEN_INFO_SET_ROLE;
   payload: string;
 }
 
@@ -39,5 +47,6 @@ export interface SetTokenInfoToken {
 export type tokenInfoAction =
   | SetTokenInfoId
   | SetTokenInfoFirstName
+  | SetTokenInfoRole
   | SetTokenInfoError
   | SetTokenInfoToken;

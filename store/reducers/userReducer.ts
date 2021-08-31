@@ -4,7 +4,8 @@ import {
   USER_END_LOADING,
   USER_GET_USER,
   USER_SET_ERROR,
-  USER_START_LOADING
+  USER_START_LOADING,
+  USER_UPDATE_USER
 } from '../../types/user';
 
 const initialState: userState = {
@@ -19,6 +20,14 @@ const initialState: userState = {
 const userReducer = (state = initialState, action: userAction) => {
   switch (action.type) {
     case USER_GET_USER:
+      return {
+        ...state,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        password: action.payload.password
+      };
+    case USER_UPDATE_USER:
       return {
         ...state,
         firstName: action.payload.firstName,

@@ -1,3 +1,4 @@
+import { IUser } from '../types/user';
 import axiosInstance from './axiosInstance';
 
 const getUser = async (userId: string, token: string): Promise<any> => {
@@ -11,4 +12,22 @@ const getUser = async (userId: string, token: string): Promise<any> => {
   return response.data[0];
 };
 
-export default { getUser };
+const updateUser = async (
+  userData: IUser,
+  role: string,
+  token: string
+): Promise<any> => {
+  const response = await axiosInstance(token).put(
+    `/users/${userData.id}`,
+    userData
+  );
+
+  if (!response) {
+    return null;
+  }
+
+  // console.log(response);
+  return response;
+};
+
+export default { getUser, updateUser };

@@ -26,8 +26,18 @@ const updateUser = async (
     return null;
   }
 
-  // console.log(response);
   return response;
 };
 
-export default { getUser, updateUser };
+const deleteUser = async (userId: string, token: string): Promise<any> => {
+  const response = await axiosInstance(token).delete(`/users/${userId}`);
+
+  if (!response) {
+    return null;
+  }
+  console.log(response);
+
+  return response;
+};
+
+export default { getUser, updateUser, deleteUser };

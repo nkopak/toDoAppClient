@@ -3,6 +3,7 @@ import userService from '../../services/userService';
 import {
   IUser,
   userAction,
+  USER_DELETE_USER,
   USER_END_LOADING,
   USER_GET_USER,
   USER_SET_ERROR,
@@ -53,21 +54,25 @@ export const updateUser =
     }
   };
 
-// export const deleteList =
-//   (data: IDeleteListData): ThunkAction<void, RootState, null, listAction> =>
-//   async (dispatch) => {
-//     dispatch({ type: LIST_START_LOADING });
-//     try {
-//       const response = await listService.deleteList(data);
+export const deleteUser =
+  (
+    userId: string,
+    token: string
+  ): ThunkAction<void, RootState, null, userAction> =>
+  async (dispatch) => {
+    dispatch({ type: USER_START_LOADING });
+    try {
+      const response = await userService.deleteUser(userId, token);
 
-//       if (response) {
-//         dispatch({ type: LIST_DELETE_LIST, payload: response });
-//       }
-//     } catch (error) {
-//       dispatch({ type: LIST_SET_ERROR, payload: error.message });
-//     } finally {
-//       dispatch({ type: LIST_END_LOADING });
-//     }
-//   };
+      console.log(response);
+      if (response) {
+        dispatch({ type: USER_DELETE_USER });
+      }
+    } catch (error) {
+      dispatch({ type: USER_SET_ERROR, payload: error.message });
+    } finally {
+      dispatch({ type: USER_END_LOADING });
+    }
+  };
 
 export default getUser;

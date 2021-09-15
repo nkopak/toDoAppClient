@@ -1,0 +1,29 @@
+import { listState } from '../../types/list';
+import listReducer from './listReducer';
+
+let initialState: listState;
+
+beforeEach(() => {
+  initialState = {
+    lists: [
+      {
+        id: 'c8ef4bab-ccec-4e18-896e-74eb06c35c00',
+        userId: '157417aa-938f-48d6-9564-3e0e067fdf26',
+        todoTitle: 'Destroy the ring'
+      },
+      {
+        id: '5677f5d2-2149-46e0-85a7-cf8303a7552b',
+        userId: '157417aa-938f-48d6-9564-3e0e067fdf26',
+        todoTitle: 'Return to Shire'
+      }
+    ],
+    loading: false,
+    error: ''
+  };
+});
+
+// test('', () => {
+//   listReducer(initialState);
+
+//   expect();
+// });

@@ -1,0 +1,31 @@
+// import getLists from './listActions';
+// import listService from '../../services/listService';
+// import { IList, listState } from '../../types/list';
+
+// jest.mock('../../services/listService');
+// const listServiceMock = listService as jest.Mocked<typeof listService>;
+
+// const dispatchMock = jest.fn();
+// const getStateMock = jest.fn();
+
+// const result: Array<IList> = [];
+
+// beforeEach(() => {
+//   dispatchMock.mockClear();
+//   getStateMock.mockClear();
+//   listServiceMock.loadLists.mockClear();
+// });
+
+// //@ts-ignore
+// listServiceMock.loadLists.mockReturnValue(Promise.resolve(result));
+
+// test('', async () => {
+//   const thunk = getLists(
+//     '157417aa-938f-48d6-9564-3e0e067fdf26',
+//     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE1NzQxN2FhLTkzOGYtNDhkNi05NTY0LTNlMGUwNjdmZGYyNiIsImZpcnN0TmFtZSI6IkZyb2RvIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MzA5MTY2NDYsImV4cCI6MTYzMTAwMzA0Nn0.9jl5IrMmEQR9If7OhzJevR0ws5D_b14EraghtJG3krQ'
+//   );
+
+//   await thunk(dispatchMock, getStateMock, {});
+
+//   expect(dispatchMock).toBeCalledTimes(3);
+// });

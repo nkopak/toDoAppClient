@@ -7,15 +7,21 @@ const Menu = () => (
   <div className={styles.container}>
     {/* <div className={styles.footer} /> */}
     <div className={styles.linkContainer}>
-      <Link href="/lists">
-        <Button>
-          <Typography variant="h4">Lists</Typography>
-        </Button>
-      </Link>
+      <div data-testid="listsLink">
+        <Link prefetch href="/lists">
+          <Button data-testid="listsButton">
+            <Typography variant="h4" data-testid="listsHeader">
+              Lists
+            </Typography>
+          </Button>
+        </Link>
+      </div>
 
       <Link href="/info">
-        <Button>
-          <Typography variant="h4">User Info</Typography>
+        <Button data-testid="userInfoButton">
+          <Typography variant="h4" data-testid="userInfoHeader">
+            User Info
+          </Typography>
         </Button>
       </Link>
     </div>

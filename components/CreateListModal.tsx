@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import { createList } from '../store/actions/listActions';
 import useTypedSelector from '../hooks/useTypedSelector';
 
@@ -82,7 +83,11 @@ export default function SimpleModal({
 
   return (
     <div>
-      <Button type="button" onClick={() => setOpen(true)}>
+      <Button
+        type="button"
+        onClick={() => setOpen(true)}
+        endIcon={<PlaylistAddIcon />}
+      >
         {buttonTitle}
       </Button>
       <Modal

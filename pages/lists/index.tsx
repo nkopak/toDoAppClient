@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import {
   Container,
   Typography,
-  Link,
+  // Link,
   Breadcrumbs,
   makeStyles
 } from '@material-ui/core';
 import { ToastContainer } from 'react-toastify';
+import router from 'next/router';
 import useTypedSelector from '../../hooks/useTypedSelector';
 import getLists from '../../store/actions/listActions';
 import TodoList from '../../components/TodoList';
@@ -16,6 +17,19 @@ import CreateListModal from '../../components/CreateListModal';
 const useStyles = makeStyles({
   breadcrumps: {
     backgroundColor: '#E3F2FD'
+  },
+  myTextStyle: {
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer'
+    }
+  },
+  activeLink: {
+    color: '#000',
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer'
+    }
   }
 });
 
@@ -37,12 +51,27 @@ const Lists = () => {
       <hr />
       <Container className={styles.breadcrumps}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/">
+          {/* <Link color="inherit" href="/">
             Main
-          </Link>
-          <Link color="textPrimary" href="/lists" aria-current="page">
+          </Link> */}
+          <Typography
+            className={styles.myTextStyle}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push('/');
+            }}
+          >
+            Main
+          </Typography>
+          <Typography
+            className={styles.activeLink}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push('/lists');
+            }}
+          >
             Lists
-          </Link>
+          </Typography>
         </Breadcrumbs>
       </Container>
 

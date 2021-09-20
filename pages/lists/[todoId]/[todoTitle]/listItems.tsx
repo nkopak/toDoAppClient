@@ -4,7 +4,7 @@ import {
   Container,
   Typography,
   Breadcrumbs,
-  Link,
+  // Link,
   makeStyles
   // CircularProgress
 } from '@material-ui/core';
@@ -20,6 +20,19 @@ import getListItems from '../../../../store/actions/listItemActions';
 const useStyles = makeStyles({
   breadcrumps: {
     backgroundColor: '#E3F2FD'
+  },
+  myTextStyle: {
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer'
+    }
+  },
+  activeLink: {
+    color: '#000',
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer'
+    }
   }
 });
 
@@ -53,19 +66,33 @@ const ListItems = () => {
       <hr />
       <Container className={styles.breadcrumps}>
         <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/">
+          <Typography
+            className={styles.myTextStyle}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push('/');
+            }}
+          >
             Main
-          </Link>
-          <Link color="inherit" href="/lists">
+          </Typography>
+          <Typography
+            className={styles.myTextStyle}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push('/lists');
+            }}
+          >
             Lists
-          </Link>
-          <Link
-            color="textPrimary"
-            href={`${router.asPath}`}
-            aria-current="page"
+          </Typography>
+          <Typography
+            className={styles.activeLink}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push(`${router.asPath}`);
+            }}
           >
             {router.query.todoTitle}
-          </Link>
+          </Typography>
         </Breadcrumbs>
       </Container>
 

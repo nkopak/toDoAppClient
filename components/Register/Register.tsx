@@ -5,7 +5,8 @@ import {
   TextField,
   Typography,
   Button,
-  makeStyles
+  makeStyles,
+  Tooltip
 } from '@material-ui/core';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -15,11 +16,15 @@ import PropTypes from 'prop-types';
 import signUp from '../../store/actions/registerActions';
 // import 'react-toastify/dist/ReactToastify.css';
 import getTokenInfo from '../../store/actions/tokenInfoActions';
+import styles from './Register.module.css';
 
 const useStyles = makeStyles({
   field: {
     marginTop: 10,
     marginBottom: 10
+  },
+  button: {
+    width: '100%'
   }
 });
 
@@ -80,130 +85,162 @@ const RegisterComponent = ({
 
   return (
     <Container>
-      <form
-        onSubmit={handleSubmit(async () => {
-          await dispatch(signUp(creds));
-          await dispatch(getTokenInfo());
+      <div className={styles.container}>
+        <div className={styles.registerBox}>
+          <Typography variant="h2">Registration</Typography>
+          <div className={styles.form}>
+            <form
+              onSubmit={handleSubmit(async () => {
+                await dispatch(signUp(creds));
+                await dispatch(getTokenInfo());
 
-          if (!firstRender) {
-            if (!flag) {
-              setFlag(true);
-            } else {
-              setFlag(false);
-            }
-          }
-        })}
-      >
-        <Typography variant="h2">Registration</Typography>
-        <Controller
-          name="firstName"
-          control={control}
-          render={() => (
-            <TextField
-              className={classes.field}
-              id="firstNameInput"
-              label="First Name"
-              variant="outlined"
-              required
-              // error={inputError}
-              inputProps={{ 'data-testid': 'firstNameInput' }}
-              onChange={(e) => {
-                setCreds({ ...creds, firstName: e.target.value });
-              }}
-            />
-          )}
-        />
+                if (!firstRender) {
+                  if (!flag) {
+                    setFlag(true);
+                  } else {
+                    setFlag(false);
+                  }
+                }
+              })}
+            >
+              <Controller
+                name="firstName"
+                control={control}
+                render={() => (
+                  <TextField
+                    className={classes.field}
+                    id="firstNameInput"
+                    label="First Name"
+                    variant="outlined"
+                    required
+                    // error={inputError}
+                    inputProps={{ 'data-testid': 'firstNameInput' }}
+                    onChange={(e) => {
+                      setCreds({ ...creds, firstName: e.target.value });
+                    }}
+                  />
+                )}
+              />
 
-        <br />
-        <Controller
-          name="lastName"
-          control={control}
-          render={() => (
-            <TextField
-              className={classes.field}
-              id="lastNameInput"
-              label="Last Name"
-              variant="outlined"
-              required
-              // error={inputError}
-              inputProps={{ 'data-testid': 'lastNameInput' }}
-              onChange={(e) => {
-                setCreds({ ...creds, lastName: e.target.value });
-              }}
-            />
-          )}
-        />
+              <br />
+              <Controller
+                name="lastName"
+                control={control}
+                render={() => (
+                  <TextField
+                    className={classes.field}
+                    id="lastNameInput"
+                    label="Last Name"
+                    variant="outlined"
+                    required
+                    // error={inputError}
+                    inputProps={{ 'data-testid': 'lastNameInput' }}
+                    onChange={(e) => {
+                      setCreds({ ...creds, lastName: e.target.value });
+                    }}
+                  />
+                )}
+              />
 
-        <br />
+              <br />
 
-        <Controller
-          name="email"
-          control={control}
-          render={() => (
-            <TextField
-              className={classes.field}
-              id="emailInput"
-              label="Email"
-              variant="outlined"
-              required
-              // error={inputError}
-              inputProps={{ 'data-testid': 'emailInput' }}
-              onChange={(e) => {
-                setCreds({ ...creds, email: e.target.value });
-              }}
-            />
-          )}
-        />
+              <Controller
+                name="email"
+                control={control}
+                render={() => (
+                  <TextField
+                    className={classes.field}
+                    id="emailInput"
+                    label="Email"
+                    variant="outlined"
+                    required
+                    // error={inputError}
+                    inputProps={{ 'data-testid': 'emailInput' }}
+                    onChange={(e) => {
+                      setCreds({ ...creds, email: e.target.value });
+                    }}
+                  />
+                )}
+              />
 
-        <br />
-        <Controller
-          name="password"
-          control={control}
-          render={() => (
-            <TextField
-              className={classes.field}
-              id="passwordInput"
-              label="Password"
-              variant="outlined"
-              required
-              // error={inputError}
-              inputProps={{ 'data-testid': 'passwordInput' }}
-              onChange={(e) => {
-                setCreds({ ...creds, password: e.target.value });
-              }}
-            />
-          )}
-        />
+              <br />
+              <Controller
+                name="password"
+                control={control}
+                render={() => (
+                  <TextField
+                    className={classes.field}
+                    id="passwordInput"
+                    label="Password"
+                    variant="outlined"
+                    required
+                    // error={inputError}
+                    inputProps={{ 'data-testid': 'passwordInput' }}
+                    onChange={(e) => {
+                      setCreds({ ...creds, password: e.target.value });
+                    }}
+                  />
+                )}
+              />
 
-        <br />
-        <Button
-          data-testid="submitButton"
-          type="submit"
-          variant="contained"
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          disabled={
-            loading ||
-            !creds.firstName ||
-            !creds.lastName ||
-            !creds.email ||
-            !creds.password
-          }
-        >
-          {loading ? 'Loading...' : 'Register'}
-        </Button>
-      </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-      />
+              <br />
+              <Tooltip
+                title={
+                  !creds.email || !creds.password
+                    ? 'Fill all input fields'
+                    : 'Sign Up'
+                }
+              >
+                <span>
+                  <Button
+                    className={classes.button}
+                    data-testid="submitButton"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    endIcon={<ArrowRightIcon />}
+                    disabled={
+                      loading ||
+                      !creds.firstName ||
+                      !creds.lastName ||
+                      !creds.email ||
+                      !creds.password
+                    }
+                  >
+                    {loading ? 'Loading...' : 'Register'}
+                  </Button>
+                </span>
+              </Tooltip>
+            </form>
+          </div>
+
+          <div className={styles.login}>
+            <Typography>Already registered?</Typography>
+            <Tooltip title="Proceed to register page">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push('/auth/login');
+                }}
+              >
+                Sign In
+              </Button>
+            </Tooltip>
+          </div>
+
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+          />
+        </div>
+      </div>
     </Container>
   );
 };

@@ -8,19 +8,24 @@ import {
   TextField,
   Typography,
   Button,
-  makeStyles
+  makeStyles,
+  Tooltip
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { ToastContainer, toast } from 'react-toastify';
 import signIn from '../../store/actions/loginActions';
 import getTokenInfo from '../../store/actions/tokenInfoActions';
-// import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+import styles from './Login.module.css';
 
 const useStyles = makeStyles({
   textField: {
     marginTop: 10,
     marginBottom: 10,
     display: 'block'
+  },
+  button: {
+    width: '100%'
   }
 });
 
@@ -80,82 +85,117 @@ const LoginComponent = ({
 
   return (
     <Container>
-      <Typography data-testid="header" variant="h2" component="h1">
-        Login
-      </Typography>
-      <form
-        onSubmit={handleSubmit(async () => {
-          await dispatch(signIn(creds));
-          await dispatch(getTokenInfo());
+      <div className={styles.container}>
+        <div className={styles.loginBox}>
+          <Typography data-testid="header" variant="h2" component="h1">
+            Welcome!
+          </Typography>
+          <div className={styles.form}>
+            <form
+              onSubmit={handleSubmit(async () => {
+                await dispatch(signIn(creds));
+                await dispatch(getTokenInfo());
 
-          if (!firstRender) {
-            if (!flag) {
-              setFlag(true);
-            } else {
-              setFlag(false);
-            }
-          }
-        })}
-      >
-        <Controller
-          name="email"
-          control={control}
-          render={() => (
-            <TextField
-              className={classes.textField}
-              // data-testid="email"
-              id="email"
-              label="Email"
-              variant="outlined"
-              inputProps={{ 'data-testid': 'email' }}
-              onChange={(e) => setCreds({ ...creds, email: e.target.value })}
-            />
-          )}
-        />
+                if (!firstRender) {
+                  if (!flag) {
+                    setFlag(true);
+                  } else {
+                    setFlag(false);
+                  }
+                }
+              })}
+            >
+              <Controller
+                name="email"
+                control={control}
+                render={() => (
+                  <TextField
+                    className={classes.textField}
+                    // data-testid="email"
+                    id="email"
+                    label="Email"
+                    variant="outlined"
+                    inputProps={{ 'data-testid': 'email' }}
+                    onChange={(e) =>
+                      setCreds({ ...creds, email: e.target.value })
+                    }
+                  />
+                )}
+              />
 
-        <br />
-        <Controller
-          name="password"
-          control={control}
-          render={() => (
-            <TextField
-              className={classes.textField}
-              // data-testid="password"
-              id="password"
-              label="Password"
-              variant="outlined"
-              inputProps={{ 'data-testid': 'password' }}
-              // required
-              // error={!creds.password}
-              onChange={(e) => setCreds({ ...creds, password: e.target.value })}
-            />
-          )}
-        />
+              <br />
+              <Controller
+                name="password"
+                control={control}
+                render={() => (
+                  <TextField
+                    className={classes.textField}
+                    // data-testid="password"
+                    id="password"
+                    label="Password"
+                    variant="outlined"
+                    inputProps={{ 'data-testid': 'password' }}
+                    // required
+                    // error={!creds.password}
+                    onChange={(e) =>
+                      setCreds({ ...creds, password: e.target.value })
+                    }
+                  />
+                )}
+              />
 
-        <br />
+              <br />
+              <Tooltip
+                title={
+                  !creds.email || !creds.password
+                    ? 'Fill all input fields'
+                    : 'Sign In'
+                }
+              >
+                <span>
+                  <Button
+                    className={classes.button}
+                    data-testid="button"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    endIcon={<ArrowRightIcon />}
+                    disabled={loading || !creds.email || !creds.password}
+                  >
+                    {loading ? 'Wait' : 'Login'}
+                  </Button>
+                </span>
+              </Tooltip>
+            </form>
+          </div>
 
-        <Button
-          data-testid="button"
-          type="submit"
-          variant="contained"
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          disabled={loading || !creds.email || !creds.password}
-        >
-          {loading ? 'Wait' : 'Login'}
-        </Button>
-      </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-      />
+          <div className={styles.register}>
+            <Typography>Don`t have an account?</Typography>
+            <Tooltip title="Proceed to register page">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push('/auth/register');
+                }}
+              >
+                Sign Up
+              </Button>
+            </Tooltip>
+          </div>
+
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+          />
+        </div>
+      </div>
     </Container>
   );
 };
